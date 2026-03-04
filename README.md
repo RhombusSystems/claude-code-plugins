@@ -8,10 +8,12 @@ This repository is a shared skills library that any Rhombus team can plug into t
 
 ## Quick Start: Register as a Plugin
 
+> **Internal repo** — you must be a RhombusSystems org member with GitHub authentication configured in your terminal. If `git clone https://github.com/RhombusSystems/claude-code-skills` works, the command below will too.
+
 Add all Rhombus skills to your Claude Code project with one command:
 
 ```
-/plugin marketplace add rhombus/claude-code-skills
+/plugin marketplace add RhombusSystems/claude-code-skills
 ```
 
 Then enable the skill group you need:

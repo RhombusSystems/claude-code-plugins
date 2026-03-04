@@ -6,10 +6,18 @@ This guide explains how to install and activate skills from this library in your
 
 The fastest way to get started. This registers the full library and lets you enable skill groups by name.
 
+**Prerequisite:** This is an internal GitHub repo. You need to be a RhombusSystems org member with GitHub authentication configured in your terminal. Claude Code uses your existing git credentials — if `git clone https://github.com/RhombusSystems/claude-code-skills` works, the command below works too.
+
+For background auto-updates at Claude Code startup, also set:
+
+```bash
+export GITHUB_TOKEN=your_github_pat
+```
+
 ### 1. Add the plugin
 
 ```
-/plugin marketplace add rhombus/claude-code-skills
+/plugin marketplace add RhombusSystems/claude-code-skills
 ```
 
 ### 2. Enable the skill groups you need
@@ -39,15 +47,21 @@ Check each category's `README.md` for the available skill commands.
 
 If you prefer to embed skills directly in your project rather than using the plugin:
 
-### 1. Copy the skill folder
+### 1. Clone this repo
+
+```bash
+git clone https://github.com/RhombusSystems/claude-code-skills
+```
+
+### 2. Copy the skill folder
 
 Copy any skill folder into your project's `skills/` directory:
 
 ```bash
-cp -r path/to/claude-code-skills/skills/developers/code-review ./skills/
+cp -r claude-code-skills/skills/developers/code-review ./skills/
 ```
 
-### 2. Register in your project's CLAUDE.md or settings
+### 3. Register in your project's CLAUDE.md or settings
 
 Add the skill path to your project's Claude Code configuration so Claude knows it's available.
 
