@@ -1,0 +1,45 @@
+{
+  "name": "rhombus-claude-code-skills",
+  "owner": { "name": "Rhombus" },
+  "metadata": {
+    "description": "Rhombus internal Claude Code skills library",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "skill-creator",
+      "description": "Meta-skill for creating, testing, and publishing new Rhombus skills",
+      "source": "./",
+      "strict": false,
+      "skills": ["./skills/skill-creator"]
+    },
+    {
+      "name": "developers",
+      "description": "Skills for Developer & Technical Teams",
+      "source": "./",
+      "strict": false,
+      "skills": []
+    },
+    {
+      "name": "business-ops",
+      "description": "Skills for Business Operations",
+      "source": "./",
+      "strict": false,
+      "skills": []
+    },
+    {
+      "name": "marketing",
+      "description": "Skills for Marketing",
+      "source": "./",
+      "strict": false,
+      "skills": []
+    },
+    {
+      "name": "finance",
+      "description": "Skills for Finance",
+      "source": "./",
+      "strict": false,
+      "skills": []
+    }
+  ]
+}
