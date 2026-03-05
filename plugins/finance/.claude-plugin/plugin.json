@@ -1,0 +1,6 @@
+{
+  "name": "finance",
+  "description": "Claude Code skills for Rhombus finance, accounting, and financial operations teams. Covers budget analysis, financial reports, expense categorization, forecasting, and audit preparation.",
+  "version": "1.0.0",
+  "author": { "name": "Rhombus" }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "developers",
+  "description": "Claude Code skills for Rhombus developer and engineering teams. Covers code review, debugging, architecture, tests, CI/CD, and technical documentation.",
+  "version": "1.0.0",
+  "author": { "name": "Rhombus" }
+}

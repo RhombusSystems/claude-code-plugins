@@ -1,10 +1,10 @@
-# Using Rhombus Skills
+# Using Rhombus Plugins
 
-This guide explains how to install and activate skills from this library in your Claude Code project.
+This guide explains how to install and activate plugins from this marketplace in your Claude Code project.
 
-## Option A: Plugin (Recommended)
+## Option A: Plugin Marketplace (Recommended)
 
-The fastest way to get started. This registers the full library and lets you enable skill groups by name.
+Install the marketplace once, then enable only your team's plugin.
 
 **Prerequisite:** This is an internal GitHub repo. You need to be a RhombusSystems org member with GitHub authentication configured in your terminal. Claude Code uses your existing git credentials — if `git clone https://github.com/RhombusSystems/claude-code-skills` works, the command below works too.
 
@@ -14,34 +14,36 @@ For background auto-updates at Claude Code startup, also set:
 export GITHUB_TOKEN=your_github_pat
 ```
 
-### 1. Add the plugin
+### 1. Add the marketplace
 
 ```
 /plugin marketplace add RhombusSystems/claude-code-skills
 ```
 
-### 2. Enable the skill groups you need
+### 2. Enable your team's plugin
 
-```
-/plugin enable skill-creator
-/plugin enable developers
-/plugin enable business-ops
-/plugin enable marketing
-/plugin enable finance
-```
+Enable only the plugin for your team:
 
-You can enable multiple groups. Only enabled groups are active in your session.
+| Team | Command |
+|---|---|
+| Developers / Engineering | `/plugin enable developers` |
+| Business Operations | `/plugin enable business-ops` |
+| Marketing / Growth / Content | `/plugin enable marketing` |
+| Finance / Accounting | `/plugin enable finance` |
+| Creating new skills | `/plugin enable plugin-creator` |
+
+You can enable multiple plugins if needed.
 
 ### 3. Activate a skill
 
-Once a group is enabled, trigger a skill using its slash command:
+Once a plugin is enabled, trigger a skill using its slash command:
 
 ```
-/skill-creator
+/plugin-creator
 /code-review
 ```
 
-Check each category's `README.md` for the available skill commands.
+Check each plugin's `README.md` for the available skill commands.
 
 ## Option B: Manual Copy
 
@@ -58,14 +60,14 @@ git clone https://github.com/RhombusSystems/claude-code-skills
 Copy any skill folder into your project's `skills/` directory:
 
 ```bash
-cp -r claude-code-skills/skills/developers/code-review ./skills/
+cp -r claude-code-skills/plugins/developers/skills/code-review ./skills/
 ```
 
 ### 3. Register in your project's CLAUDE.md or settings
 
 Add the skill path to your project's Claude Code configuration so Claude knows it's available.
 
-### 3. Activate the skill
+### 4. Activate the skill
 
 Trigger it in Claude Code just as you would a plugin-installed skill.
 
@@ -80,6 +82,6 @@ Some skills include supporting files:
 
 ## Troubleshooting
 
-- **Skill not found**: Make sure the plugin group is enabled and the skill path is correctly listed in `marketplace.json`
+- **Skill not found**: Make sure the plugin is enabled and the skill's `SKILL.md` exists in the correct location under `plugins/<name>/skills/<skill-name>/`
 - **Unexpected behavior**: Check the `SKILL.md` for the skill — the instructions are readable and can be reviewed directly
 - **Questions about creating skills**: See [contributing.md](contributing.md)

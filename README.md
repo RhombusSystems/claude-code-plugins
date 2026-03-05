@@ -1,47 +1,45 @@
-# Rhombus Claude Code Skills
+# Rhombus Claude Code Plugin Marketplace
 
-A centralized, organized library of Claude Code skills for use across Rhombus teams.
+A centralized plugin marketplace for Claude Code, organized by Rhombus team. Each team installs only the plugin relevant to them.
 
 ## What is this?
 
-This repository is a shared skills library that any Rhombus team can plug into their Claude Code setup. Skills are reusable prompt modules that give Claude specialized capabilities — like running code reviews, drafting finance reports, or generating marketing copy — triggered by a simple slash command.
+This repository is a plugin marketplace for Claude Code. Plugins are collections of skills — reusable prompt modules that give Claude specialized capabilities triggered by slash commands. Each team's plugin is independent: a marketing person never needs to install developer plugins, and vice versa.
 
-## Quick Start: Register as a Plugin
+## Quick Start
 
 > **Internal repo** — you must be a RhombusSystems org member with GitHub authentication configured in your terminal. If `git clone https://github.com/RhombusSystems/claude-code-skills` works, the command below will too.
 
-Add all Rhombus skills to your Claude Code project with one command:
+### 1. Add the marketplace
 
 ```
 /plugin marketplace add RhombusSystems/claude-code-skills
 ```
 
-Then enable the skill group you need:
+### 2. Enable your team's plugin
 
 ```
-/plugin enable skill-creator
 /plugin enable developers
 /plugin enable business-ops
 /plugin enable marketing
 /plugin enable finance
+/plugin enable plugin-creator
 ```
 
-See [docs/usage.md](docs/usage.md) for full installation and activation details.
+Enable only the plugin for your team. You can enable multiple if needed.
 
-## Skill Categories
+See [docs/usage.md](docs/usage.md) for full installation details.
 
-| Category | Description | Skills |
+## Plugins
+
+| Plugin | For | Skills |
 |---|---|---|
-| [skill-creator](skills/skill-creator/) | Meta-skill for creating, testing, and publishing new Rhombus skills | Generate, eval, and publish skills |
-| [developers](skills/developers/) | Skills for Developer & Technical Teams | Code review, debugging, architecture |
-| [business-ops](skills/business-ops/) | Skills for Business Operations | Workflows, reporting, process docs |
-| [marketing](skills/marketing/) | Skills for Marketing | Copy, campaigns, content strategy |
-| [finance](skills/finance/) | Skills for Finance | Reports, analysis, budgeting |
+| [developers](plugins/developers/) | Engineering, DevOps, QA | Code review, debugging, architecture, tests, CI/CD |
+| [business-ops](plugins/business-ops/) | Operations, Project Management | SOPs, meeting summaries, OKRs, status reports |
+| [marketing](plugins/marketing/) | Marketing, Growth, Content | Ad copy, campaigns, blog posts, social posts |
+| [finance](plugins/finance/) | Finance, Accounting | Budget analysis, reports, expense categorization |
+| [plugin-creator](plugins/plugin-creator/) | Anyone creating new skills | Generate, eval, and publish skills |
 
 ## Creating New Skills
 
-Any team member can create and publish a new skill using the `skill-creator` meta-skill. See [docs/contributing.md](docs/contributing.md) for the full guide.
-
-## Using Skills
-
-See [docs/usage.md](docs/usage.md) for how to install and activate skills in your project.
+Any team member can create and publish a new skill using the `plugin-creator` plugin. See [docs/contributing.md](docs/contributing.md) for the full guide.

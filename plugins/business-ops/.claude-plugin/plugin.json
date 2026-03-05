@@ -1,0 +1,6 @@
+{
+  "name": "business-ops",
+  "description": "Claude Code skills for Rhombus business operations teams. Covers process documentation, meeting summaries, OKR drafting, vendor evaluation, and status reporting.",
+  "version": "1.0.0",
+  "author": { "name": "Rhombus" }
+}

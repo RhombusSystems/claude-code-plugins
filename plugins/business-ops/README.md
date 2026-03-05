@@ -23,4 +23,4 @@ Skills in this category are designed for operations, project management, and cro
 
 ## Adding a skill
 
-See [docs/contributing.md](../../docs/contributing.md) to create and publish a new skill for this category.
+Place new skills under `plugins/business-ops/skills/<skill-name>/SKILL.md`. See [docs/contributing.md](../../docs/contributing.md) for the full guide.

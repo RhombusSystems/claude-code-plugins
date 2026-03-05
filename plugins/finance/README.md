@@ -24,4 +24,4 @@ Skills in this category are designed for finance, accounting, and financial oper
 
 ## Adding a skill
 
-See [docs/contributing.md](../../docs/contributing.md) to create and publish a new skill for this category.
+Place new skills under `plugins/finance/skills/<skill-name>/SKILL.md`. See [docs/contributing.md](../../docs/contributing.md) for the full guide.

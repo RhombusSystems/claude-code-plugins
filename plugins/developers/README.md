@@ -24,4 +24,4 @@ Skills in this category are designed for software engineers, DevOps, QA, and oth
 
 ## Adding a skill
 
-See [docs/contributing.md](../../docs/contributing.md) to create and publish a new skill for this category.
+Place new skills under `plugins/developers/skills/<skill-name>/SKILL.md`. See [docs/contributing.md](../../docs/contributing.md) for the full guide.
