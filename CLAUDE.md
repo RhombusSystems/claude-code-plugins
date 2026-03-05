@@ -5,7 +5,7 @@ This is the Rhombus Claude Code plugin marketplace.
 ## Repo Layout
 
 ```
-claude-code-skills/
+claude-code-plugins/
 ├── README.md                    # Overview and quick-start
 ├── CLAUDE.md                    # This file
 ├── .claude-plugin/

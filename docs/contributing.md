@@ -7,7 +7,7 @@ This guide walks you through creating and publishing a new skill to the Rhombus 
 ## Prerequisites
 
 - Claude Code installed and configured
-- Access to the [RhombusSystems/claude-code-skills](https://github.com/RhombusSystems/claude-code-skills) repo
+- Access to the [RhombusSystems/claude-code-plugins](https://github.com/RhombusSystems/claude-code-plugins) repo
 
 ## Steps
 
@@ -18,7 +18,7 @@ The `plugin-creator` skill is a meta-skill that guides you through the entire sk
 **If you haven't installed the plugin yet**, add the marketplace first:
 
 ```
-/plugin marketplace add RhombusSystems/claude-code-skills
+/plugin marketplace add RhombusSystems/claude-code-plugins
 ```
 
 Then enable the plugin-creator:
@@ -30,7 +30,7 @@ Then enable the plugin-creator:
 **If you're working from a local clone**, you can add the plugin directly from the path:
 
 ```
-/plugin marketplace add ./path/to/claude-code-skills
+/plugin marketplace add ./path/to/claude-code-plugins
 /plugin enable plugin-creator
 ```
 

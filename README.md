@@ -8,12 +8,12 @@ This repository is a plugin marketplace for Claude Code. Plugins are collections
 
 ## Quick Start
 
-> **Internal repo** — you must be a RhombusSystems org member with GitHub authentication configured in your terminal. If `git clone https://github.com/RhombusSystems/claude-code-skills` works, the command below will too.
+> **Internal repo** — you must be a RhombusSystems org member with GitHub authentication configured in your terminal. If `git clone https://github.com/RhombusSystems/claude-code-plugins` works, the command below will too.
 
 ### 1. Add the marketplace
 
 ```
-/plugin marketplace add RhombusSystems/claude-code-skills
+/plugin marketplace add RhombusSystems/claude-code-plugins
 ```
 
 ### 2. Enable your team's plugin

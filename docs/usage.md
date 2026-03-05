@@ -6,7 +6,7 @@ This guide explains how to install and activate plugins from this marketplace in
 
 Install the marketplace once, then enable only your team's plugin.
 
-**Prerequisite:** This is an internal GitHub repo. You need to be a RhombusSystems org member with GitHub authentication configured in your terminal. Claude Code uses your existing git credentials — if `git clone https://github.com/RhombusSystems/claude-code-skills` works, the command below works too.
+**Prerequisite:** This is an internal GitHub repo. You need to be a RhombusSystems org member with GitHub authentication configured in your terminal. Claude Code uses your existing git credentials — if `git clone https://github.com/RhombusSystems/claude-code-plugins` works, the command below works too.
 
 For background auto-updates at Claude Code startup, also set:
 
@@ -17,7 +17,7 @@ export GITHUB_TOKEN=your_github_pat
 ### 1. Add the marketplace
 
 ```
-/plugin marketplace add RhombusSystems/claude-code-skills
+/plugin marketplace add RhombusSystems/claude-code-plugins
 ```
 
 ### 2. Enable your team's plugin
@@ -52,7 +52,7 @@ If you prefer to embed skills directly in your project rather than using the plu
 ### 1. Clone this repo
 
 ```bash
-git clone https://github.com/RhombusSystems/claude-code-skills
+git clone https://github.com/RhombusSystems/claude-code-plugins
 ```
 
 ### 2. Copy the skill folder
@@ -60,7 +60,7 @@ git clone https://github.com/RhombusSystems/claude-code-skills
 Copy any skill folder into your project's `skills/` directory:
 
 ```bash
-cp -r claude-code-skills/plugins/developers/skills/code-review ./skills/
+cp -r claude-code-plugins/plugins/developers/skills/code-review ./skills/
 ```
 
 ### 3. Register in your project's CLAUDE.md or settings
