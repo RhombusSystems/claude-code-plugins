@@ -6,10 +6,30 @@
     "version": "1.0.0"
   },
   "plugins": [
-    { "name": "developers",     "source": "./plugins/developers" },
-    { "name": "business-ops",   "source": "./plugins/business-ops" },
-    { "name": "marketing",      "source": "./plugins/marketing" },
-    { "name": "finance",        "source": "./plugins/finance" },
-    { "name": "plugin-creator", "source": "./plugins/plugin-creator" }
+    {
+      "name": "developers",
+      "description": "Code review, API documentation, and the full Rhombus API reference (846+ endpoints). Built for engineering teams.",
+      "source": "./plugins/developers"
+    },
+    {
+      "name": "business-ops",
+      "description": "Status reports for leadership and structured onboarding checklists for new hires. Built for operations teams.",
+      "source": "./plugins/business-ops"
+    },
+    {
+      "name": "marketing",
+      "description": "Rhombus brand guidelines enforcement with exact colors, typography, and logo rules. Built for marketing and brand teams.",
+      "source": "./plugins/marketing"
+    },
+    {
+      "name": "finance",
+      "description": "Expense report generation and budget variance analysis with projections. Built for finance and accounting teams.",
+      "source": "./plugins/finance"
+    },
+    {
+      "name": "plugin-creator",
+      "description": "Create, test, and publish new skills with the full interview-draft-eval workflow. Includes marketplace validation and scaffolding tools.",
+      "source": "./plugins/plugin-creator"
+    }
   ]
 }

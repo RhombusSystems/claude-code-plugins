@@ -1,6 +1,6 @@
 {
   "name": "business-ops",
-  "description": "Claude Code skills for Rhombus business operations teams. Covers process documentation, meeting summaries, OKR drafting, vendor evaluation, and status reporting.",
+  "description": "Status reports and onboarding checklists for operations teams. Includes /status-report for generating structured updates with accomplishments, blockers, and metrics, and /onboarding-checklist for creating phased onboarding plans tailored by role and team.",
   "version": "1.0.0",
   "author": { "name": "Rhombus" }
 }
