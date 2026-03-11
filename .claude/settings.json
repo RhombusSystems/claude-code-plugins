@@ -1,0 +1,26 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "file_path=$(echo \"$CLAUDE_TOOL_INPUT\" | python3 -c \"import sys,json; print(json.load(sys.stdin).get('file_path',''))\" 2>/dev/null); if echo \"$file_path\" | grep -q 'marketplace.json$'; then echo 'BLOCK: marketplace.json should be updated via the plugin registration process, not edited directly. Follow docs/contributing.md or use the skill-template-generator skill.' >&2; exit 2; fi"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "file_path=$(echo \"$CLAUDE_TOOL_INPUT\" | python3 -c \"import sys,json; print(json.load(sys.stdin).get('file_path',''))\" 2>/dev/null); if echo \"$file_path\" | grep -q 'SKILL.md$'; then if [ -f \"$file_path\" ]; then frontmatter=$(sed -n '/^---$/,/^---$/p' \"$file_path\" | head -30); if ! echo \"$frontmatter\" | grep -q '^name:'; then echo 'WARNING: SKILL.md is missing required name: field in frontmatter'; fi; if ! echo \"$frontmatter\" | grep -q '^description:'; then echo 'WARNING: SKILL.md is missing required description: field in frontmatter'; fi; fi; fi"
+          }
+        ]
+      }
+    ]
+  }
+}
