@@ -1,26 +1,40 @@
-# Developer & Technical Teams Skills
+# Developer & Technical Teams Plugin
 
-Skills in this category are designed for software engineers, DevOps, QA, and other technical contributors.
+Skills, agents, and hooks for software engineers, DevOps, QA, and other technical contributors building on the Rhombus platform.
 
-## What belongs here
+## Skills
 
-- Code review and PR feedback
-- Debugging and root cause analysis
-- Architecture documentation and decision records
-- Test generation and coverage analysis
-- CI/CD pipeline guidance
-- API documentation drafting
-- Onboarding checklists for new engineers
+| Skill | Command | Description |
+|---|---|---|
+| `code-review` | `/code-review` | Structured code review for quality, security, and performance |
+| `api-doc` | `/api-doc` | Generate API documentation from source code |
+| `rhombus-api` | `/rhombus-api` | Full Rhombus API reference (846+ endpoints, OpenAPI spec, SDK generation) |
+| `rhombus` | `/rhombus` | Rhombus CLI tool reference — all commands, auth, workflows, and troubleshooting |
 
-## Example skill ideas
+## Agents
 
-| Skill | Description |
+| Agent | Description |
 |---|---|
-| `code-review` | Structured PR review with inline feedback and severity ratings |
-| `debug-assist` | Step-by-step debugging guide from error message to fix |
-| `adr-writer` | Draft Architecture Decision Records from a description |
-| `test-generator` | Generate unit tests for a given function or module |
-| `incident-runbook` | Create incident response runbooks from service descriptions |
+| `rhombus-cli` | General-purpose CLI assistant — builds and executes `rhombus` commands |
+| `rhombus-alerts` | Alert monitoring specialist — investigates security events, downloads footage |
+| `rhombus-devices` | Device management — inventories cameras, sensors, doors, audits deployments |
+
+## Hooks
+
+| Hook | Event | Description |
+|---|---|---|
+| `rhombus-api-intercept` | PreToolUse (Bash) | Suggests `rhombus` CLI when detecting raw curl/wget calls to Rhombus APIs |
+| `rhombus-cli-validate` | PreToolUse (Bash) | Validates rhombus commands and suggests improvements (jq piping, flag format) |
+
+## Rhombus CLI Quick Start
+
+```bash
+brew install RhombusSystems/tap/rhombus
+rhombus login
+rhombus camera get-minimal-camera-state-list
+```
+
+See the `/rhombus` skill for full CLI documentation, or ask the `rhombus-cli` agent to help build commands.
 
 ## Adding a skill
 

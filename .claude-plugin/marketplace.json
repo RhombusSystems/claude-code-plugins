@@ -8,7 +8,7 @@
   "plugins": [
     {
       "name": "developers",
-      "description": "Code review, API documentation, and the full Rhombus API reference (846+ endpoints). Built for engineering teams.",
+      "description": "Code review, API documentation, Rhombus CLI tool, and the full Rhombus API reference (846+ endpoints). Includes device management, alert monitoring, and CLI assistant agents. Built for engineering teams.",
       "source": "./plugins/developers"
     },
     {

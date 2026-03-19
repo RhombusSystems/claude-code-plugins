@@ -1,6 +1,6 @@
 {
   "name": "developers",
-  "description": "Code review, API documentation, and the full Rhombus API reference (846+ endpoints). Includes /code-review for security and quality audits, /api-doc for generating endpoint docs from source code, and /rhombus-api for building on the Rhombus platform.",
-  "version": "1.0.0",
+  "description": "Code review, API documentation, Rhombus CLI tool, and the full Rhombus API reference (846+ endpoints). Includes /code-review for security and quality audits, /api-doc for generating endpoint docs, /rhombus-api for platform development, and /rhombus for CLI command building and execution. Features agents for device management, alert monitoring, and CLI assistance, plus hooks for smart command suggestions.",
+  "version": "1.1.0",
   "author": { "name": "Rhombus" }
 }
