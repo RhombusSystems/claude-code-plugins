@@ -35,23 +35,25 @@ rhombus camera get-minimal-camera-state-list | jq '.cameraStates | group_by(.con
 
 ### Doors & Access Control
 ```bash
-rhombus door get-door-state-list
-rhombus door-controller get-door-controller-state-list
-rhombus access-control get-access-control-groups
+rhombus door get-minimal-door-state-list
+# Use rhombus door-controller --help to discover available operations
+# Use rhombus access-control --help to discover available operations
+rhombus access-control find-access-control-group-by-exact-name --name "Group Name"
 ```
 
 ### Sensors
 ```bash
-rhombus sensor get-sensor-state-list
-rhombus climate get-climate-data
+# Sensor only has seekpoint commands; use rhombus sensor --help to discover operations
+rhombus climate get-minimal-climate-state-list
 ```
 
 ### Other Devices
 ```bash
-rhombus audio-gateway get-audio-gateway-state-list
-rhombus doorbell-camera get-doorbell-camera-state-list
-rhombus badge-reader get-badge-reader-state-list
-rhombus elevator get-elevator-state-list
+# Use --help to discover available operations for each device type
+rhombus audiogateway --help
+rhombus doorbell-camera --help
+rhombus badge-reader --help
+rhombus elevator --help
 ```
 
 ## Device Details
@@ -59,10 +61,10 @@ rhombus elevator get-elevator-state-list
 For detailed info on a specific device:
 ```bash
 # Camera settings
-rhombus camera get-camera-settings-admin --camera-uuid "UUID"
+rhombus camera get-camera-config --camera-uuid "UUID"
 
 # Discover available fields
-rhombus camera get-camera-settings-admin --generate-cli-skeleton
+rhombus camera get-camera-config --generate-cli-skeleton
 ```
 
 ## Deployment Audit
@@ -91,11 +93,11 @@ rhombus partner get-partner-clients-v2
 
 # Get devices for a specific client
 rhombus camera get-minimal-camera-state-list --partner-org "client name"
-rhombus door get-door-state-list --partner-org "client name"
+rhombus door get-minimal-door-state-list --partner-org "client name"
 ```
 
 ## Error Handling
 
 - Empty results → verify the auth profile has access to the expected org
-- Permission denied → check user role with `rhombus user get-users-for-org`
+- Permission denied → check user role with `rhombus user get-users-in-org`
 - Unknown device UUID → list devices first to find the correct UUID

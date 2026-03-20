@@ -25,7 +25,7 @@ rhombus camera get-minimal-camera-state-list
 ### Get detailed camera settings
 ```bash
 # First, find the camera UUID from the list above
-rhombus camera get-camera-settings-admin --camera-uuid "cam_abc123"
+rhombus camera get-camera-config --camera-uuid "cam_abc123"
 ```
 
 ### Watch camera footage
@@ -46,7 +46,7 @@ rhombus footage "front lobby" --token-duration 7200
 
 ### Get camera media URIs
 ```bash
-rhombus camera get-media-uris --camera-uuid "cam_abc123"
+rhombus camera get-camera-media-uris --camera-uuid "cam_abc123"
 ```
 
 ## Alert Management
@@ -88,30 +88,32 @@ rhombus alert play "$ALERT_UUID"
 
 ## Access Control
 
-### List access control groups
+### Find access control group by name
 ```bash
-rhombus access-control get-access-control-groups
+# Use rhombus access-control --help to discover all available operations
+rhombus access-control find-access-control-group-by-exact-name --name "Group Name"
 ```
 
 ### List doors
 ```bash
-rhombus door get-door-state-list
+rhombus door get-minimal-door-state-list
 ```
 
 ### Get door controller status
 ```bash
-rhombus door-controller get-door-controller-state-list
+# Use rhombus door-controller --help to discover available operations
+rhombus door-controller register-discovered-rhombus-reader  # example; see --help for all commands
 ```
 
 ## AI & Analytics
 
 ### Face recognition
 ```bash
-# List known persons
-rhombus face-recognition-person get-face-recognition-persons
+# Get a known person
+rhombus face-recognition-person get-person --person-uuid "PERSON_UUID"
 
-# Get recent face recognition events
-rhombus face-recognition-event get-face-recognition-events
+# Get a face recognition event
+rhombus face-recognition-event get-face-event --event-uuid "EVENT_UUID"
 ```
 
 ### Vehicle / LPR
@@ -119,25 +121,25 @@ rhombus face-recognition-event get-face-recognition-events
 # Get vehicle detection events
 rhombus vehicle get-vehicle-events
 
-# Search by license plate
-rhombus vehicle search-vehicles --license-plate "ABC1234"
+# List all vehicles
+rhombus vehicle get-vehicles
 ```
 
 ### Occupancy
 ```bash
-rhombus occupancy get-occupancy-data
+rhombus occupancy get-minimal-occupancy-sensor-state-list
 ```
 
 ## Organization Management
 
 ### List users
 ```bash
-rhombus user get-users-for-org
+rhombus user get-users-in-org
 ```
 
 ### Organization settings
 ```bash
-rhombus org get-org-settings
+rhombus org get-org
 ```
 
 ### Locations
@@ -149,12 +151,14 @@ rhombus location get-locations
 
 ### List alert policies
 ```bash
-rhombus policy get-policies
+# Policies are per-type: camera, door, climate, etc.
+rhombus policy get-camera-policies
+# Also: get-door-policies, get-climate-policies, get-occupancy-policies, etc.
 ```
 
-### Get policy details
+### Get policy alert details
 ```bash
-rhombus policy get-policy-details --policy-uuid "pol_abc123"
+rhombus event get-policy-alert-details --cli-input-json '{"alertUuid":"alert_abc123"}'
 ```
 
 ## Reports
@@ -162,26 +166,26 @@ rhombus policy get-policy-details --policy-uuid "pol_abc123"
 ### Generate a report
 ```bash
 # Discover parameters
-rhombus report generate-report --generate-cli-skeleton
+rhombus report get-count-report --generate-cli-skeleton
 
 # Generate with parameters
-rhombus report generate-report --cli-input-json file://report-params.json
+rhombus report get-count-report --cli-input-json file://report-params.json
 ```
 
 ## Integrations
 
 ### Manage API tokens
 ```bash
-rhombus integrations get-api-token-applications
+rhombus integrations get-api-token-applications-dep
+# Note: this command is deprecated. Consider using the developer group instead.
 ```
 
 ### Webhooks
 ```bash
-# List webhooks
-rhombus webhook-integrations get-webhook-integrations
+# Get webhook integration details
+rhombus webhook-integrations get-webhook-integration --cli-input-json '{"webhookUuid":"WEBHOOK_UUID"}'
 
-# Create a webhook (use skeleton to discover fields)
-rhombus webhook-integrations create-webhook-integration --generate-cli-skeleton
+# Use rhombus webhook-integrations --help to discover all available operations
 ```
 
 ## Rhombus MIND (AI Assistant)
@@ -280,7 +284,7 @@ rhombus --help
 rhombus camera --help
 
 # Get full parameter details
-rhombus camera get-camera-settings-admin --generate-cli-skeleton
+rhombus camera get-camera-config --generate-cli-skeleton
 ```
 
 ### Debug API Calls

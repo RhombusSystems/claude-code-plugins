@@ -139,8 +139,8 @@ rhombus <service-group> <operation> [flags]
 
 # Examples
 rhombus camera get-minimal-camera-state-list
-rhombus door get-door-state-list
-rhombus user get-users-for-org
+rhombus door get-minimal-door-state-list
+rhombus user get-users-in-org
 rhombus event get-policy-alerts-v2 --after-timestamp-ms 1700000000000
 ```
 
@@ -154,17 +154,17 @@ rhombus access-control --help
 
 **Generate a JSON skeleton with all parameters:**
 ```bash
-rhombus camera get-camera-settings-admin --generate-cli-skeleton
+rhombus camera get-camera-config --generate-cli-skeleton
 # Prints JSON template with all available fields and example values
 ```
 
 **Pass parameters as JSON:**
 ```bash
 # Inline JSON
-rhombus camera get-camera-settings-admin --cli-input-json '{"cameraUuid":"cam_123"}'
+rhombus camera get-camera-config --cli-input-json '{"cameraUuid":"cam_123"}'
 
 # From file
-rhombus camera get-camera-settings-admin --cli-input-json file://params.json
+rhombus camera get-camera-config --cli-input-json file://params.json
 ```
 
 **Flags override JSON input:** If both `--cli-input-json` and individual flags are set, flags take precedence.
@@ -177,7 +177,7 @@ rhombus camera get-camera-settings-admin --cli-input-json file://params.json
 
 See `references/commands.md` for the complete list of all 60+ service groups with descriptions. The major categories:
 
-- **Devices:** camera, sensor, door, door-controller, doorbell-camera, audio-gateway, elevator, climate, badge-reader, button, ble, media-device, device-config
+- **Devices:** camera, sensor, door, door-controller, doorbell-camera, audiogateway, audioplayback, elevator, climate, badge-reader, button, ble, media-device, device-config
 - **Access Control:** access-control, access-control-integrations, guest-management-kiosk
 - **AI & Analytics:** face-recognition-person, face-recognition-event, face-recognition-matchmaker, vehicle, occupancy, logistics, proximity, scene-query, search
 - **Events & Monitoring:** event, event-search, alert-monitoring, alarm-monitoring-keypad, lockdown-plan, policy, rules, rules-records, schedule, rapidsos
@@ -197,7 +197,7 @@ rhombus alert recent --camera "parking lot" --max 5
 rhombus camera get-minimal-camera-state-list
 
 # Get door states
-rhombus door get-door-state-list
+rhombus door get-minimal-door-state-list
 
 # Watch a live stream
 rhombus footage "main entrance"
@@ -207,7 +207,7 @@ rhombus chat
 > "Show me all motion alerts from the last 30 minutes"
 
 # Generate API call skeleton
-rhombus report generate-report --generate-cli-skeleton
+rhombus report get-count-report --generate-cli-skeleton
 
 ```
 

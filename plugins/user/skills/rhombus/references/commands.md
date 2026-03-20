@@ -115,8 +115,8 @@ All auto-generated from the Rhombus OpenAPI spec. Each group contains multiple o
 | `door` | Door state and management |
 | `door-controller` | Door controller hardware operations |
 | `doorbell-camera` | Doorbell camera operations |
-| `audio-gateway` | Audio gateway device management |
-| `audio-playback` | Audio playback control |
+| `audiogateway` | Audio gateway device management |
+| `audioplayback` | Audio playback control |
 | `climate` | Climate/temperature sensor operations |
 | `badge-reader` | Badge reader operations |
 | `button` | Panic button / device button management |
@@ -220,7 +220,7 @@ rhombus camera get-minimal-camera-state-list --help
 ### Skeleton Generation
 ```bash
 # Print JSON template with all parameters and example values
-rhombus camera get-camera-settings-admin --generate-cli-skeleton
+rhombus camera get-camera-config --generate-cli-skeleton
 ```
 
 Output is a JSON object showing every available parameter with type-appropriate example values. Use this to discover what fields an endpoint accepts.
@@ -229,22 +229,22 @@ Output is a JSON object showing every available parameter with type-appropriate 
 
 **Individual flags (kebab-case):**
 ```bash
-rhombus camera get-camera-settings-admin --camera-uuid "cam_abc123"
+rhombus camera get-camera-config --camera-uuid "cam_abc123"
 ```
 
 **Inline JSON:**
 ```bash
-rhombus camera get-camera-settings-admin --cli-input-json '{"cameraUuid":"cam_abc123"}'
+rhombus camera get-camera-config --cli-input-json '{"cameraUuid":"cam_abc123"}'
 ```
 
 **JSON from file:**
 ```bash
-rhombus camera get-camera-settings-admin --cli-input-json file://params.json
+rhombus camera get-camera-config --cli-input-json file://params.json
 ```
 
 **Flag + JSON (flags override):**
 ```bash
-rhombus camera get-camera-settings-admin \
+rhombus camera get-camera-config \
   --cli-input-json file://base-params.json \
   --camera-uuid "cam_override"
 ```

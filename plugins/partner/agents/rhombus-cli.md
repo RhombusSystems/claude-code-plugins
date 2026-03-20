@@ -43,7 +43,7 @@ When the user describes what they want to do:
 
 ## Service Group Quick Reference
 
-- **Devices:** camera, sensor, door, door-controller, doorbell-camera, audio-gateway, elevator, climate, badge-reader, button, ble, media-device, device-config, component
+- **Devices:** camera, sensor, door, door-controller, doorbell-camera, audiogateway, audioplayback, elevator, climate, badge-reader, button, ble, media-device, device-config, component
 - **Access:** access-control, access-control-integrations, guest-management-kiosk
 - **AI:** face-recognition-person, face-recognition-event, vehicle, occupancy, scene-query, search
 - **Events:** event, event-search, alert-monitoring, policy, rules, schedule, lockdown-plan
