@@ -1,6 +1,0 @@
-{
-  "name": "business-ops",
-  "description": "Status reports and onboarding checklists for operations teams. Includes /status-report for generating structured updates with accomplishments, blockers, and metrics, and /onboarding-checklist for creating phased onboarding plans tailored by role and team.",
-  "version": "1.0.0",
-  "author": { "name": "Rhombus" }
-}

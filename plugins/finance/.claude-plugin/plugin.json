@@ -1,6 +1,0 @@
-{
-  "name": "finance",
-  "description": "Expense reports and budget analysis for finance teams. Includes /expense-report for categorizing and formatting reimbursement requests, and /budget-analysis for comparing actuals to plan with variance tracking, run-rate projections, and recommendations.",
-  "version": "1.0.0",
-  "author": { "name": "Rhombus" }
-}

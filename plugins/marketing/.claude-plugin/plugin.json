@@ -1,6 +1,0 @@
-{
-  "name": "marketing",
-  "description": "Rhombus brand guidelines and compliance for marketing teams. Includes /brand-guide with exact color values, Sora/DM Sans typography specs, logo usage rules, and on-brand CSS/Tailwind generation.",
-  "version": "1.0.0",
-  "author": { "name": "Rhombus" }
-}

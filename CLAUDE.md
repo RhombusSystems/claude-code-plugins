@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-This is the Rhombus Claude Code plugin marketplace — a centralized repo where team-specific plugins (collections of skills) are published and installed via Claude Code's `/plugin` system. Each plugin targets a specific team (developers, business-ops, marketing, finance) so users only install what's relevant to them.
+This is the Rhombus Claude Code plugin marketplace — a centralized repo where plugins are published and installed via Claude Code's `/plugin` system. Plugins are organized by persona: developers building on the platform, day-to-day users, and MSP/reseller partners.
 
 ## Architecture
 
@@ -22,11 +22,13 @@ This is the Rhombus Claude Code plugin marketplace — a centralized repo where 
 - **`disable-model-invocation: true`** is required on any skill with side effects (deploy, commit, send messages, post externally).
 - **Kebab-case** for all skill folder names (e.g., `code-review`, not `codeReview`).
 - **Keep SKILL.md under 500 lines.** Move large reference material to `references/` subdirectories.
-- **Branch naming** for new skills: `plugin/<category>/<skill-name>` (e.g., `plugin/developers/code-review`).
+- **Branch naming** for new skills: `plugin/<persona>/<skill-name>` (e.g., `plugin/developer/code-review`).
 
 ## Creating New Skills
 
-Use the `plugin-creator` meta-plugin at `plugins/plugin-creator/`. It runs an interview → draft → test → eval loop with built-in eval scripts at `plugins/plugin-creator/skills/plugin-creator/scripts/`. Full workflow documented in `docs/contributing.md`.
+1. Copy `template/SKILL.md` as your starting point
+2. Place the skill in the appropriate plugin under `plugins/<persona>/skills/<skill-name>/SKILL.md`
+3. See `docs/contributing.md` for the full guide
 
 ## Skill Folder Structure
 

@@ -1,6 +1,0 @@
-{
-  "name": "plugin-creator",
-  "description": "Create, test, and validate skills for the Rhombus plugin marketplace. Includes /plugin-creator for the full interview-draft-eval workflow, /marketplace-health for auditing registry and manifest integrity, and /skill-template-generator for scaffolding new skill folders.",
-  "version": "1.0.0",
-  "author": { "name": "Rhombus" }
-}

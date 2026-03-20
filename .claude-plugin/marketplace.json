@@ -2,34 +2,24 @@
   "name": "rhombus-plugins",
   "owner": { "name": "Rhombus" },
   "metadata": {
-    "description": "Rhombus internal Claude Code plugin marketplace",
-    "version": "1.0.0"
+    "description": "Rhombus Claude Code plugin marketplace",
+    "version": "2.0.0"
   },
   "plugins": [
     {
-      "name": "developers",
-      "description": "Code review, API documentation, Rhombus CLI tool, and the full Rhombus API reference (846+ endpoints). Includes device management, alert monitoring, and CLI assistant agents. Built for engineering teams.",
-      "source": "./plugins/developers"
+      "name": "rhombus-developer",
+      "description": "Tools for building on the Rhombus platform. Full API reference (846+ endpoints), API doc generation, code review, and smart CLI suggestions.",
+      "source": "./plugins/developer"
     },
     {
-      "name": "business-ops",
-      "description": "Status reports for leadership and structured onboarding checklists for new hires. Built for operations teams.",
-      "source": "./plugins/business-ops"
+      "name": "rhombus-user",
+      "description": "Day-to-day Rhombus platform tools. CLI reference, alert monitoring, device management, and command validation.",
+      "source": "./plugins/user"
     },
     {
-      "name": "marketing",
-      "description": "Rhombus brand guidelines enforcement with exact colors, typography, and logo rules. Built for marketing and brand teams.",
-      "source": "./plugins/marketing"
-    },
-    {
-      "name": "finance",
-      "description": "Expense report generation and budget variance analysis with projections. Built for finance and accounting teams.",
-      "source": "./plugins/finance"
-    },
-    {
-      "name": "plugin-creator",
-      "description": "Create, test, and publish new skills with the full interview-draft-eval workflow. Includes marketplace validation and scaffolding tools.",
-      "source": "./plugins/plugin-creator"
+      "name": "rhombus-partner",
+      "description": "MSP/reseller tools for managing multiple client organizations. CLI reference, alert monitoring, device management across client orgs.",
+      "source": "./plugins/partner"
     }
   ]
 }

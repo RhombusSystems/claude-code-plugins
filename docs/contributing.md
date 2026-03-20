@@ -2,7 +2,7 @@
 
 This guide walks you through creating and publishing a new skill to the Rhombus plugin marketplace.
 
-**Terminology:** A **plugin** is the team-level installable unit (e.g., `developers`, `marketing`). A **skill** is an individual capability inside a plugin, defined by a `SKILL.md` file. This is the Claude Code spec terminology — keep it consistent.
+**Terminology:** A **plugin** is the persona-level installable unit (e.g., `developer`, `user`, `partner`). A **skill** is an individual capability inside a plugin, defined by a `SKILL.md` file. This is the Claude Code spec terminology — keep it consistent.
 
 ## Prerequisites
 
@@ -11,48 +11,18 @@ This guide walks you through creating and publishing a new skill to the Rhombus 
 
 ## Steps
 
-### 1. Activate the plugin-creator
+### 1. Start from the template
 
-The `plugin-creator` skill is a meta-skill that guides you through the entire skill creation process.
+Copy `template/SKILL.md` into the appropriate plugin:
 
-**If you haven't installed the plugin yet**, add the marketplace first:
-
-```
-/plugin marketplace add RhombusSystems/claude-code-plugins
-```
-
-Then enable the plugin-creator:
-
-```
-/plugin enable plugin-creator
+```bash
+mkdir -p plugins/<persona>/skills/<skill-name>
+cp template/SKILL.md plugins/<persona>/skills/<skill-name>/SKILL.md
 ```
 
-**If you're working from a local clone**, you can add the plugin directly from the path:
+Edit the SKILL.md to define your skill's name, description, and instructions.
 
-```
-/plugin marketplace add ./path/to/claude-code-plugins
-/plugin enable plugin-creator
-```
-
-Then trigger it:
-
-```
-/plugin-creator
-```
-
-Claude will interview you about the skill you want to create — what it does, who uses it, and what a good output looks like.
-
-### 2. Follow the interview → draft → test → eval loop
-
-The plugin-creator guides you through:
-
-1. **Interview** — Claude asks about the skill's purpose, inputs, and expected outputs
-2. **Draft** — Claude generates a `SKILL.md` based on your answers
-3. **Test** — Run the skill against a few real examples
-4. **Eval** — Use the eval scripts in `plugins/plugin-creator/skills/plugin-creator/scripts/` to score outputs and iterate
-5. **Description optimization** — Run the description optimizer to improve triggering accuracy
-
-### 3. Write a strong description
+### 2. Write a strong description
 
 The `description` field in your `SKILL.md` frontmatter is the **primary mechanism** that determines whether Claude uses your skill. A weak description means a skill that never triggers.
 
@@ -75,9 +45,7 @@ description: >
   even if they don't explicitly say "summarize".
 ```
 
-After creating your skill, use the plugin-creator's built-in description optimizer to test and improve triggering accuracy before submitting.
-
-### 4. Choose the right frontmatter flags
+### 3. Choose the right frontmatter flags
 
 **`disable-model-invocation: true`** — Add this to any skill that has side effects or that you want to control manually:
 
@@ -105,20 +73,19 @@ argument-hint: "[filename or PR number]"
 
 See `template/SKILL.md` for the full list of available frontmatter fields.
 
-### 5. Place the skill in the correct plugin folder
+### 4. Place the skill in the correct plugin folder
 
 Put your skill in the appropriate plugin under `plugins/`:
 
-| Team | Folder |
+| Persona | Folder |
 |---|---|
-| Developers | `plugins/developers/skills/<skill-name>/` |
-| Business Ops | `plugins/business-ops/skills/<skill-name>/` |
-| Marketing | `plugins/marketing/skills/<skill-name>/` |
-| Finance | `plugins/finance/skills/<skill-name>/` |
+| Developer | `plugins/developer/skills/<skill-name>/` |
+| User | `plugins/user/skills/<skill-name>/` |
+| Partner | `plugins/partner/skills/<skill-name>/` |
 
-Use **kebab-case** for the folder name (e.g., `plugins/developers/skills/code-review/`).
+Use **kebab-case** for the folder name (e.g., `plugins/developer/skills/code-review/`).
 
-### 6. Skill folder structure
+### 5. Skill folder structure
 
 At minimum, your skill folder needs:
 
@@ -139,9 +106,9 @@ plugins/<plugin>/skills/<skill-name>/
 
 Keep `SKILL.md` under 500 lines. Move large reference material to separate files and link to them from `SKILL.md`.
 
-### 7. Open a PR
+### 6. Open a PR
 
-- Branch name: `plugin/<category>/<skill-name>` (e.g., `plugin/developers/code-review`)
+- Branch name: `plugin/<persona>/<skill-name>` (e.g., `plugin/developer/code-review`)
 - PR description: what the skill does, example inputs/outputs, and how you tested it
 - Link to the plugin's README for reviewer context
 

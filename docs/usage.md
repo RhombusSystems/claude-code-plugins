@@ -4,15 +4,7 @@ This guide explains how to install and activate plugins from this marketplace in
 
 ## Option A: Plugin Marketplace (Recommended)
 
-Install the marketplace once, then enable only your team's plugin.
-
-**Prerequisite:** This is an internal GitHub repo. You need to be a RhombusSystems org member with GitHub authentication configured in your terminal. Claude Code uses your existing git credentials — if `git clone https://github.com/RhombusSystems/claude-code-plugins` works, the command below works too.
-
-For background auto-updates at Claude Code startup, also set:
-
-```bash
-export GITHUB_TOKEN=your_github_pat
-```
+Install the marketplace once, then enable your plugin.
 
 ### 1. Add the marketplace
 
@@ -20,17 +12,13 @@ export GITHUB_TOKEN=your_github_pat
 /plugin marketplace add RhombusSystems/claude-code-plugins
 ```
 
-### 2. Enable your team's plugin
+### 2. Enable your plugin
 
-Enable only the plugin for your team:
-
-| Team | Command |
+| Persona | Command |
 |---|---|
-| Developers / Engineering | `/plugin enable developers` |
-| Business Operations | `/plugin enable business-ops` |
-| Marketing / Growth / Content | `/plugin enable marketing` |
-| Finance / Accounting | `/plugin enable finance` |
-| Creating new skills | `/plugin enable plugin-creator` |
+| Developers building on Rhombus | `/plugin enable rhombus-developer` |
+| Day-to-day Rhombus users | `/plugin enable rhombus-user` |
+| MSP/reseller partners | `/plugin enable rhombus-partner` |
 
 You can enable multiple plugins if needed.
 
@@ -39,8 +27,9 @@ You can enable multiple plugins if needed.
 Once a plugin is enabled, trigger a skill using its slash command:
 
 ```
-/plugin-creator
+/rhombus-api
 /code-review
+/rhombus
 ```
 
 Check each plugin's `README.md` for the available skill commands.
@@ -60,7 +49,7 @@ git clone https://github.com/RhombusSystems/claude-code-plugins
 Copy any skill folder into your project's `skills/` directory:
 
 ```bash
-cp -r claude-code-plugins/plugins/developers/skills/code-review ./skills/
+cp -r claude-code-plugins/plugins/developer/skills/code-review ./skills/
 ```
 
 ### 3. Register in your project's CLAUDE.md or settings
