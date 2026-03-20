@@ -1,17 +1,31 @@
 #!/bin/bash
-# Check for Rhombus CLI updates once per day.
-# Runs on SessionStart — skips if checked recently or CLI not installed.
+# Install the Rhombus CLI if missing, or check for updates once per day.
+# Runs on SessionStart via plugin.json hook.
 
 MARKER="${CLAUDE_PLUGIN_DATA:-.}/.last-cli-update-check"
 INTERVAL=86400  # 24 hours in seconds
 
-# Skip if CLI not installed
+# If CLI not installed, attempt to install
 if ! command -v rhombus &>/dev/null; then
-  echo "Rhombus CLI is not installed. Install with: brew install RhombusSystems/tap/rhombus"
+  if command -v brew &>/dev/null; then
+    echo "Rhombus CLI not found. Installing via Homebrew..."
+    brew install RhombusSystems/tap/rhombus 2>&1
+    if command -v rhombus &>/dev/null; then
+      echo "Rhombus CLI installed. Run 'rhombus login' to authenticate."
+    else
+      echo "Homebrew install failed. Try manually: brew install RhombusSystems/tap/rhombus"
+    fi
+  else
+    echo "Rhombus CLI is not installed. Install with one of:"
+    echo "  brew install RhombusSystems/tap/rhombus"
+    echo "  curl -fsSL https://raw.githubusercontent.com/RhombusSystems/rhombus-cli/main/install.sh | sh"
+  fi
+  mkdir -p "$(dirname "$MARKER")"
+  date +%s > "$MARKER"
   exit 0
 fi
 
-# Skip if checked recently
+# Skip update check if checked recently
 if [ -f "$MARKER" ]; then
   last_check=$(cat "$MARKER" 2>/dev/null || echo 0)
   now=$(date +%s)
