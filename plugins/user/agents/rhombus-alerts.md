@@ -45,7 +45,7 @@ When the user asks about alerts:
    rhombus alert thumb "ALERT_UUID" --output /tmp/alert-thumb.jpg
 
    # Download video clip
-   rhombus alert download "ALERT_UUID" --output /tmp/alert-clip.mpd
+   rhombus alert download "ALERT_UUID" --output /tmp/alert-clip.mp4
 
    # Play in browser
    rhombus alert play "ALERT_UUID"

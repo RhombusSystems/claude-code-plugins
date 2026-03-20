@@ -103,12 +103,13 @@ Interactive setup: API key, output format, endpoint URL. Use `--profile` for mul
 
 Camera names are fuzzy-matched (case-insensitive substring).
 
-### `rhombus live [camera]`
-Opens a live DASH video stream in the browser. Accepts camera name or UUID (fuzzy-matched).
+### `rhombus footage [camera]`
+Opens a Rhombus camera player in the browser. Defaults to live view. Use `--start` to jump to a specific time in the past.
 
 ```bash
-rhombus live "front lobby"
-rhombus live --duration 7200   # 2-hour federated token
+rhombus footage "front lobby"
+rhombus footage "front lobby" --start "5m ago"
+rhombus footage "front lobby" --token-duration 7200   # 2-hour session
 ```
 
 ### `rhombus chat`
@@ -199,7 +200,7 @@ rhombus camera get-minimal-camera-state-list
 rhombus door get-door-state-list
 
 # Watch a live stream
-rhombus live "main entrance"
+rhombus footage "main entrance"
 
 # Ask MIND about your system
 rhombus chat

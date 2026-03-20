@@ -51,30 +51,30 @@ Uses media API at `https://media.rhombussystems.com`.
 
 ### rhombus alert download [alert-uuid]
 
-Download alert video clip as DASH .mpd manifest.
+Download alert video clip as MP4.
 
 | Flag | Type | Default | Description |
 |------|------|---------|-------------|
-| `--output` | string | `alert-<uuid>.mpd` | Output file path |
+| `--output` | string | auto-generated | Output file path |
 
 ### rhombus alert play [alert-uuid]
 
 Play alert video clip in browser. Generates a temporary HTML file with a dash.js video player and opens it.
 
-### rhombus live [camera-name-or-uuid]
+### rhombus footage [camera-name-or-uuid]
 
-Open live DASH video stream in browser.
+Opens a Rhombus camera player in the browser. Defaults to live view. Use `--start` to jump to a specific time in the past.
 
 | Flag | Type | Default | Description |
 |------|------|---------|-------------|
-| `--duration` | int | 3600 | Federated session token lifetime in seconds |
+| `--start` | string | live | Start time (epoch ms, or relative like "5m ago", "1h ago") |
+| `--token-duration` | int | 3600 | Federated session token lifetime in seconds |
 
 Flow:
 1. Resolves camera name to UUID (fuzzy match)
 2. Generates federated session token via `/api/org/generateFederatedSessionToken`
 3. Gets media URIs via `/api/camera/getMediaUris`
-4. Creates temporary HTML file with dash.js player
-5. Opens in default browser
+4. Opens camera player in default browser
 
 ### rhombus chat
 

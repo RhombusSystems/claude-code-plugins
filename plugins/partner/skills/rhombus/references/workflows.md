@@ -28,17 +28,20 @@ rhombus camera get-minimal-camera-state-list
 rhombus camera get-camera-settings-admin --camera-uuid "cam_abc123"
 ```
 
-### Watch a live stream
+### Watch camera footage
 ```bash
-# By name (fuzzy matched)
-rhombus live "front lobby"
-rhombus live "parking"
+# Live view by name (fuzzy matched)
+rhombus footage "front lobby"
+rhombus footage "parking"
 
 # By UUID
-rhombus live "cam_abc123"
+rhombus footage "cam_abc123"
+
+# Jump to a specific time in the past
+rhombus footage "front lobby" --start "5m ago"
 
 # Extended session (2 hours)
-rhombus live "front lobby" --duration 7200
+rhombus footage "front lobby" --token-duration 7200
 ```
 
 ### Get camera media URIs
@@ -77,7 +80,7 @@ ALERT_UUID="alert_abc123"
 rhombus alert thumb "$ALERT_UUID" --output "alert-thumb.jpg"
 
 # Download video clip
-rhombus alert download "$ALERT_UUID" --output "alert-clip.mpd"
+rhombus alert download "$ALERT_UUID" --output "alert-clip.mp4"
 
 # Play in browser
 rhombus alert play "$ALERT_UUID"
