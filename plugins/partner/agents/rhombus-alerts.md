@@ -62,6 +62,15 @@ When the user asks about alerts:
 
    # Play in browser
    rhombus alert play "ALERT_UUID"
+
+   # Analyze alert frames — extracts and describes what happened
+   rhombus analyze alert "ALERT_UUID" --partner-org "client name"
+   ```
+
+6. **Stitch related footage** if the user wants a broader timeline across a client's cameras:
+   ```bash
+   rhombus stitch --camera "camera1,camera2" --partner-org "client name" --period "yesterday between 6am and 7am"
+   rhombus stitch --location "Main Office" --partner-org "client name" --period "last hour"
    ```
 
 ## Policy Alert Details

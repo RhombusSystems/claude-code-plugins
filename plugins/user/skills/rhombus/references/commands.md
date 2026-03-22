@@ -76,6 +76,47 @@ Flow:
 3. Gets media URIs via `/api/camera/getMediaUris`
 4. Opens camera player in default browser
 
+### rhombus analyze alert \<alert-uuid\>
+
+Extract and analyze frames from an alert's video clip.
+
+| Flag | Type | Default | Description |
+|------|------|---------|-------------|
+| `--output` | string | temp dir | Output directory for frames |
+| `--raw` | bool | false | Output frames + manifest for external analysis (skip visual analysis) |
+
+### rhombus analyze footage [camera-names-or-uuids...]
+
+Extract and analyze frames from camera footage over a time window.
+
+| Flag | Type | Default | Description |
+|------|------|---------|-------------|
+| `--start` | string | — | Start time (epoch ms) |
+| `--end` | string | — | End time (epoch ms) |
+| `--period` | string | — | Natural language time window (e.g., "yesterday between 8am and 9am") |
+| `--location` | string | — | Location name (resolves to all cameras at that location) |
+| `--fill` | bool | false | Include evenly-spaced fill frames in addition to activity frames |
+| `--output` | string | temp dir | Output directory for frames |
+| `--raw` | bool | false | Output frames + manifest for external analysis |
+
+Time can be specified with `--start`/`--end` (epoch ms) or `--period` (natural language).
+
+### rhombus stitch
+
+Download video clips for detected events and stitch them into a single chronological video. Concurrent events from multiple cameras are shown in a grid layout with timestamp overlays.
+
+| Flag | Type | Default | Description |
+|------|------|---------|-------------|
+| `--camera` | strings | — | Camera names or UUIDs (comma-separated) |
+| `--location` | string | — | Location name (all cameras at that location) |
+| `--start` | string | — | Start time (epoch ms) |
+| `--end` | string | — | End time (epoch ms) |
+| `--period` | string | — | Natural language time window (e.g., "yesterday between 6am and 7am") |
+| `--buffer` | int | 5 | Seconds of buffer around each event |
+| `--output` | string | auto-generated | Output file path |
+
+Must specify cameras via `--camera` or `--location`, and a time range via `--start`/`--end` or `--period`.
+
 ### rhombus chat
 
 Interactive AI chat with Rhombus MIND (backed by Claude).

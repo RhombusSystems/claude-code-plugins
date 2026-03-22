@@ -176,6 +176,38 @@ rhombus footage "front lobby" --start "5m ago"
 rhombus footage "front lobby" --token-duration 7200   # 2-hour session
 ```
 
+### `rhombus analyze`
+Extract and analyze frames from alert clips or camera footage over a time window.
+
+```bash
+# Analyze an alert
+rhombus analyze alert "ALERT_UUID" --partner-org "acme corp"
+
+# Analyze footage from a client's camera
+rhombus analyze footage "front lobby" --partner-org "acme corp" --period "yesterday between 8am and 9am"
+
+# Analyze all cameras at a client location
+rhombus analyze footage --location "Main Office" --partner-org "acme corp" --start 1700000000000 --end 1700003600000
+
+# Include fill frames, or use --raw for external analysis
+rhombus analyze footage "parking lot" --partner-org "acme corp" --period "today between 6am and 7am" --fill
+rhombus analyze alert "ALERT_UUID" --partner-org "acme corp" --raw --output /tmp/frames
+```
+
+### `rhombus stitch`
+Download video clips for detected events and stitch them into a single chronological video. Concurrent events from multiple cameras are shown in a grid layout with timestamp overlays.
+
+```bash
+# Stitch events from a client's cameras
+rhombus stitch --camera "front lobby,parking lot" --partner-org "acme corp" --period "yesterday between 6am and 7am"
+
+# Stitch all events at a client location
+rhombus stitch --location "Main Office" --partner-org "acme corp" --period "last night between 10pm and 6am"
+
+# Custom buffer and output file
+rhombus stitch --camera "entrance" --partner-org "acme corp" --start 1700000000000 --end 1700003600000 --buffer 10 --output incident-review.mp4
+```
+
 ### `rhombus chat`
 Interactive AI chat with Rhombus MIND (backed by Claude). MIND can execute CLI commands locally via tool use — it has full access to the `rhombus` CLI.
 

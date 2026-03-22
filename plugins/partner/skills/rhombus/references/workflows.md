@@ -86,6 +86,38 @@ rhombus alert download "$ALERT_UUID" --output "alert-clip.mp4"
 rhombus alert play "$ALERT_UUID"
 ```
 
+### Analyze a client's alert
+```bash
+rhombus analyze alert "ALERT_UUID" --partner-org "acme corp"
+
+# Raw mode for external analysis
+rhombus analyze alert "ALERT_UUID" --partner-org "acme corp" --raw --output ./alert-frames
+```
+
+### Analyze client camera footage
+```bash
+# Analyze footage from a client's camera
+rhombus analyze footage "parking lot" --partner-org "acme corp" --period "yesterday between 8am and 9am"
+
+# Analyze all cameras at a client location
+rhombus analyze footage --location "Main Office" --partner-org "acme corp" --period "today between 6am and 7am"
+
+# Include fill frames for more complete coverage
+rhombus analyze footage "entrance" --partner-org "acme corp" --period "last hour" --fill
+```
+
+### Stitch a client incident timeline
+```bash
+# Stitch events from a client's cameras
+rhombus stitch --camera "front lobby,parking lot" --partner-org "acme corp" --period "yesterday between 6am and 7am"
+
+# Stitch all cameras at a client location
+rhombus stitch --location "Warehouse" --partner-org "acme corp" --period "last night between 10pm and 6am"
+
+# Increase buffer and save to file
+rhombus stitch --camera "entrance" --partner-org "acme corp" --period "today between 8am and noon" --buffer 10 --output incident-review.mp4
+```
+
 ## Access Control
 
 ### Find access control group by name

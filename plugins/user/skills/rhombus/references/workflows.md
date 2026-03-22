@@ -86,6 +86,45 @@ rhombus alert download "$ALERT_UUID" --output "alert-clip.mp4"
 rhombus alert play "$ALERT_UUID"
 ```
 
+### Analyze an alert
+```bash
+# Get the alert UUID from alert recent output, then analyze it
+rhombus analyze alert "ALERT_UUID"
+
+# Raw mode — extract frames without visual analysis
+rhombus analyze alert "ALERT_UUID" --raw --output ./alert-frames
+```
+
+### Analyze camera footage
+```bash
+# Analyze footage from a specific camera using natural language time
+rhombus analyze footage "parking lot" --period "yesterday between 8am and 9am"
+
+# Analyze footage from all cameras at a location
+rhombus analyze footage --location "Main Office" --period "today between 6am and 7am"
+
+# Include fill frames for more complete coverage
+rhombus analyze footage "entrance" --period "last hour" --fill
+
+# Use epoch ms for precise time ranges
+rhombus analyze footage "lobby" --start 1700000000000 --end 1700003600000
+```
+
+### Stitch an incident timeline
+```bash
+# Stitch events from multiple cameras into a single video
+rhombus stitch --camera "front lobby,parking lot,entrance" --period "yesterday between 6am and 7am"
+
+# Stitch all cameras at a location
+rhombus stitch --location "Warehouse" --period "last night between 10pm and 6am"
+
+# Increase buffer around each event for more context
+rhombus stitch --camera "entrance" --period "today between 8am and noon" --buffer 10
+
+# Save to a specific file
+rhombus stitch --location "Main Office" --period "yesterday" --output incident-review.mp4
+```
+
 ## Access Control
 
 ### Find access control group by name
