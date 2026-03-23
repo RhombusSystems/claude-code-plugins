@@ -1,7 +1,7 @@
 {
   "name": "rhombus-partner",
   "description": "Tools for MSP and reseller partners managing multiple client organizations on the Rhombus platform. Includes CLI reference, agents for CLI assistance, alert monitoring, and device management across client orgs, plus command validation.",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": { "name": "Rhombus" },
   "hooks": {
     "SessionStart": [
