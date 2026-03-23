@@ -112,6 +112,27 @@ rhombus footage "front lobby" --start "5m ago"
 rhombus footage "front lobby" --token-duration 7200   # 2-hour session
 ```
 
+### `rhombus context`
+Generate and query deployment context for LLM-assisted analysis. Creates a snapshot of all locations, cameras, and stills.
+
+```bash
+# Generate full deployment context (stills + index)
+rhombus context generate
+rhombus context generate --lan          # Use LAN for faster still downloads
+rhombus context generate --concurrency 8  # Parallel downloads
+
+# Query cached context
+rhombus context location "Main Office"  # Show location details + camera list
+rhombus context camera "Front Door"     # Fresh still + camera details + recent activity
+```
+
+**Output files** (stored in `~/.rhombus/context/<profile>/`):
+- `index.md` — Compact deployment reference for Claude context windows. Lists all locations, cameras, hardware, and links to stills.
+- `manifest.json` — Full machine-readable manifest with all metadata.
+- `stills/<camera>.jpeg` — One still per camera showing what it sees.
+
+**Usage with Claude:** Read `~/.rhombus/context/<profile>/index.md` for deployment overview. Read individual still images to understand what each camera is looking at. Use `rhombus context camera "name"` for fresh stills and activity summaries.
+
 ### `rhombus analyze`
 Extract and analyze frames from alert clips or camera footage over a time window.
 
@@ -125,6 +146,12 @@ rhombus analyze footage "front lobby" --period "yesterday between 8am and 9am"
 # Analyze footage from all cameras at a location
 rhombus analyze footage --location "Main Office" --start 1700000000000 --end 1700003600000
 
+# LAN mode — download frames directly from cameras (faster on local network)
+rhombus analyze footage --location "Office" --period "last hour" --lan
+
+# Include motion seekpoints (default: only human/vehicle/object activity)
+rhombus analyze footage "parking lot" --period "today" --include-motion
+
 # Include evenly-spaced fill frames (not just activity frames)
 rhombus analyze footage "parking lot" --period "today between 6am and 7am" --fill
 
@@ -134,7 +161,7 @@ rhombus analyze footage "lobby" --period "last hour" --raw
 ```
 
 ### `rhombus stitch`
-Download video clips for detected events and stitch them into a single chronological video. Concurrent events from multiple cameras are shown in a grid layout with timestamp overlays.
+Download video clips for detected events and stitch them into a single chronological video. Concurrent events from multiple cameras are shown in a grid layout with timestamp overlays. Uses LAN streaming when available for faster downloads.
 
 ```bash
 # Stitch events from specific cameras over a time period
@@ -145,6 +172,9 @@ rhombus stitch --location "Main Office" --period "last night between 10pm and 6a
 
 # Stitch with start/end times and custom buffer
 rhombus stitch --camera "entrance" --start 1700000000000 --end 1700003600000 --buffer 10
+
+# Include motion seekpoints (default: only human/vehicle/object activity)
+rhombus stitch --location "Office" --period "today" --include-motion
 
 # Save to a specific file
 rhombus stitch --location "Warehouse" --period "today between 8am and noon" --output incident-review.mp4
