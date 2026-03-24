@@ -328,6 +328,6 @@ rhombus camera get-camera-config --generate-cli-skeleton
 
 ### Debug API Calls
 ```bash
-# Use a different endpoint
-rhombus camera get-minimal-camera-state-list --endpoint-url "https://staging-api.rhombussystems.com"
+# Use a different endpoint (e.g. a custom or test environment)
+rhombus camera get-minimal-camera-state-list --endpoint-url "https://your-endpoint.example.com"
 ```

@@ -1,0 +1,34 @@
+# Environment and secrets
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.pfx
+*.jks
+
+# Auth and registry config
+.npmrc
+.pypirc
+
+# Editor files
+*.swp
+*.swo
+*~
+*.bak
+*.orig
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Local Claude settings
+.claude/settings.local.json
+
+# MCP config (may contain tokens)
+.mcp.json
+
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc

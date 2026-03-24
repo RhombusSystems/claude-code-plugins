@@ -101,7 +101,7 @@ Users may say things like:
 
 When the user wants an overview across all clients:
 ```bash
-for org in $(rhombus partner get-partner-clients-v2 | jq -r '.partnerClients[].orgName'); do
+rhombus partner get-partner-clients-v2 | jq -r '.partnerClients[].orgName' | while IFS= read -r org; do
   count=$(rhombus alert recent --partner-org "$org" --max 100 2>/dev/null | jq '.alerts | length')
   if [ "$count" -gt 0 ]; then
     echo "$org: $count alerts in last hour"

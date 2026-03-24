@@ -87,7 +87,7 @@ done
 ### Cross-Org Device Audit
 ```bash
 # Check for offline cameras across all clients
-for org in $(rhombus partner get-partner-clients-v2 | jq -r '.partnerClients[].orgName'); do
+rhombus partner get-partner-clients-v2 | jq -r '.partnerClients[].orgName' | while IFS= read -r org; do
   offline=$(rhombus camera get-minimal-camera-state-list --partner-org "$org" | jq '[.cameraStates[] | select(.connectionState != "connected")] | length')
   if [ "$offline" -gt 0 ]; then
     echo "$org: $offline offline cameras"
@@ -98,7 +98,7 @@ done
 ### Cross-Org Alert Check
 ```bash
 # Check recent alerts across all clients
-for org in $(rhombus partner get-partner-clients-v2 | jq -r '.partnerClients[].orgName'); do
+rhombus partner get-partner-clients-v2 | jq -r '.partnerClients[].orgName' | while IFS= read -r org; do
   count=$(rhombus alert recent --partner-org "$org" --max 100 2>/dev/null | jq '.alerts | length')
   if [ "$count" -gt 0 ]; then
     echo "$org: $count alerts in last hour"
