@@ -6,7 +6,7 @@ Tools for engineers building on the Rhombus platform.
 
 | Skill | Command | Description |
 |---|---|---|
-| `rhombus-api` | `/rhombus-api` | Full Rhombus API reference (846+ endpoints, OpenAPI spec, SDK generation) |
+| `rhombus-api` | `/rhombus-api` | Full Rhombus API reference (892+ endpoints, OpenAPI spec, SDK generation) |
 | `api-doc` | `/api-doc` | Generate API documentation from source code |
 | `code-review` | `/code-review` | Structured code review for quality, security, and performance |
 

@@ -26,7 +26,7 @@ See [docs/usage.md](docs/usage.md) for full installation details.
 
 | Plugin | For | Contents |
 |---|---|---|
-| [developer](plugins/developer/) | Engineers building on the Rhombus platform | API reference (846+ endpoints), API doc generation, code review, API intercept hook |
+| [developer](plugins/developer/) | Engineers building on the Rhombus platform | API reference (892+ endpoints), API doc generation, code review, API intercept hook |
 | [user](plugins/user/) | Day-to-day Rhombus platform users | CLI reference, CLI/alerts/devices agents, CLI validate hook |
 | [partner](plugins/partner/) | MSP/reseller managing client orgs | CLI reference, CLI/alerts/devices agents, CLI validate hook (to be customized) |
 

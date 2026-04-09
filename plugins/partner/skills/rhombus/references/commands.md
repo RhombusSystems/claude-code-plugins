@@ -166,6 +166,7 @@ All auto-generated from the Rhombus OpenAPI spec. Each group contains multiple o
 | `elevator` | Elevator control and monitoring |
 | `device-config` | Cross-device configuration management |
 | `component` | Component management (hardware components across device types) |
+| `relay` | Relay/NVR management — third-party camera discovery, RTSP assignment, NVR state, firmware, PTZ |
 
 ### Access Control
 

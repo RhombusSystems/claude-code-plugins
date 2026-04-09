@@ -1,6 +1,6 @@
 {
   "name": "rhombus-developer",
-  "description": "Tools for building on the Rhombus platform. Includes the full Rhombus API reference (846+ endpoints), API documentation generation, code review, and a hook that suggests CLI equivalents for raw API calls.",
-  "version": "1.0.0",
+  "description": "Tools for building on the Rhombus platform. Includes the full Rhombus API reference (892+ endpoints), API documentation generation, code review, and a hook that suggests CLI equivalents for raw API calls.",
+  "version": "1.1.0",
   "author": { "name": "Rhombus" }
 }

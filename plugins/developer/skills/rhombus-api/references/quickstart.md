@@ -76,7 +76,7 @@ const data = await response.json();
 
 ## API Categories
 
-The Rhombus API is organized into 60+ categories. The most commonly used:
+The Rhombus API is organized into 65+ categories. The most commonly used:
 
 ### Cameras & Video
 - **Camera** — Camera management, video retrieval, snapshots, shared streams

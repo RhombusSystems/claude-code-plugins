@@ -1,6 +1,6 @@
 ---
 name: rhombus-api
-description: Comprehensive guide for working with the Rhombus API and building applications on the Rhombus platform. Use when the user asks questions about the Rhombus API, requests cURL examples, needs endpoint documentation, wants to build apps integrating Rhombus cameras/access control/sensors, asks "How do I [X] using the Rhombus API", or asks about streaming video, LPR, face recognition, webhooks, door controllers, IoT sensors, alarm monitoring, or any Rhombus development task. Also trigger when the user mentions Rhombus platform capabilities, wants to generate SDK clients, or references the Rhombus OpenAPI spec. Covers all 60+ API service categories across 846+ endpoints including camera management, access control, IoT sensors, face recognition, vehicle/LPR, alarm monitoring, lockdown plans, occupancy, elevators, webhooks, user management, and more.
+description: Comprehensive guide for working with the Rhombus API and building applications on the Rhombus platform. Use when the user asks questions about the Rhombus API, requests cURL examples, needs endpoint documentation, wants to build apps integrating Rhombus cameras/access control/sensors, asks "How do I [X] using the Rhombus API", or asks about streaming video, LPR, face recognition, webhooks, door controllers, IoT sensors, alarm monitoring, relay/NVR management, third-party RTSP cameras, or any Rhombus development task. Also trigger when the user mentions Rhombus platform capabilities, wants to generate SDK clients, or references the Rhombus OpenAPI spec. Covers all 65+ API service categories across 892+ endpoints including camera management, access control, IoT sensors, face recognition, vehicle/LPR, alarm monitoring, lockdown plans, occupancy, elevators, relay/NVR, webhooks, user management, and more.
 ---
 
 # Rhombus API Skill
@@ -15,7 +15,7 @@ Always start by reading `references/quickstart.md` for authentication patterns, 
 
 - **Base URL**: `https://api2.rhombussystems.com`
 - **OpenAPI Spec (live)**: `https://api2.rhombussystems.com/api/openapi/public.json`
-- **OpenAPI Spec (local)**: `references/rhombus-api.json` (122,910 lines, 856 endpoints)
+- **OpenAPI Spec (local)**: `references/rhombus-api.json` (138,595 lines, 892 endpoints)
 - **Developer Docs (beta)**: `https://api-docs.rhombus.community/`
 - **Documentation MCP**: `https://api-docs.rhombus.community/mcp` (live doc search for AI tools)
 - **Docs Index (for AI)**: `https://api-docs.rhombus.community/llms.txt`
@@ -36,7 +36,7 @@ There is also a federated session token flow for browser-based apps where you ca
 
 ## Complete API Category Reference
 
-The Rhombus API is organized into **60+ service categories**. When searching the spec, match against these exact tag strings.
+The Rhombus API is organized into **65+ service categories**. When searching the spec, match against these exact tag strings.
 
 ### Core Device Management
 - `"Camera Webservice"` — Camera CRUD, settings, snapshots, VOD URIs, media URIs, shared streams
@@ -51,7 +51,7 @@ The Rhombus API is organized into **60+ service categories**. When searching the
 - `"BLE Webservice"` — Bluetooth Low Energy device management
 - `"Badge Reader Webservice"` — Badge reader hardware management
 - `"Button Webservice"` — Physical button/panic button devices
-- `"Relay Webservice"` — Relay output control (gates, barriers, etc.)
+- `"Relay Webservice"` — NVR/relay management, third-party RTSP camera discovery and assignment, firmware updates, PTZ control
 - `"Media Device Webservice"` — Media device management
 - `"Elevator Webservice"` — Elevator access control and floor management
 - `"Device Config Webservice"` — Low-level device configuration
@@ -115,7 +115,7 @@ The Rhombus API is organized into **60+ service categories**. When searching the
 
 ## Working with the API Spec
 
-The complete OpenAPI spec is at `references/rhombus-api.json` (122,910 lines). Never try to read it in full. Use targeted grep searches.
+The complete OpenAPI spec is at `references/rhombus-api.json` (138,595 lines). Never try to read it in full. Use targeted grep searches.
 
 ### Search Patterns
 

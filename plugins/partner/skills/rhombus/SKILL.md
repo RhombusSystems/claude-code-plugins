@@ -15,7 +15,7 @@ allowed-tools: Read, Grep, Glob, Bash
 
 # Rhombus CLI — Partner Edition
 
-The `rhombus` CLI wraps the entire Rhombus REST API into a single binary. It includes 6 hand-written commands and ~60 auto-generated service groups covering 846+ API endpoints.
+The `rhombus` CLI wraps the entire Rhombus REST API into a single binary. It includes 6 hand-written commands and ~65 auto-generated service groups covering 892+ API endpoints.
 
 **Partner accounts** can manage any client org by appending `--partner-org` to any command. This is the primary way to operate across your managed organizations.
 
@@ -228,7 +228,7 @@ rhombus voice --model medium   # Options: tiny, base, small (default), medium, l
 
 ## Auto-Generated API Commands
 
-~60 service groups, each with multiple subcommands mapping to Rhombus API endpoints. Every generated command follows the same pattern:
+~65 service groups, each with multiple subcommands mapping to Rhombus API endpoints. Every generated command follows the same pattern:
 
 ```bash
 rhombus <service-group> <operation> [flags]
@@ -271,9 +271,9 @@ rhombus camera get-camera-config --cli-input-json file://params.json
 
 ### Service Groups
 
-See `references/commands.md` for the complete list of all 60+ service groups with descriptions. The major categories:
+See `references/commands.md` for the complete list of all 65+ service groups with descriptions. The major categories:
 
-- **Devices:** camera, sensor, door, door-controller, doorbell-camera, audiogateway, audioplayback, elevator, climate, badge-reader, button, ble, media-device, device-config
+- **Devices:** camera, sensor, door, door-controller, doorbell-camera, audiogateway, audioplayback, elevator, climate, badge-reader, button, ble, media-device, device-config, relay
 - **Access Control:** access-control, access-control-integrations, guest-management-kiosk
 - **AI & Analytics:** face-recognition-person, face-recognition-event, face-recognition-matchmaker, vehicle, occupancy, logistics, proximity, scene-query, search
 - **Events & Monitoring:** event, event-search, alert-monitoring, alarm-monitoring-keypad, lockdown-plan, policy, rules, rules-records, schedule, rapidsos

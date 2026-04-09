@@ -1,7 +1,7 @@
 {
   "name": "rhombus-user",
   "description": "Day-to-day tools for Rhombus platform users. Includes the Rhombus CLI reference, plus agents for CLI assistance, alert monitoring, and device management. Features a hook for validating rhombus commands.",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "author": { "name": "Rhombus" },
   "hooks": {
     "SessionStart": [
