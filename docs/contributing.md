@@ -1,8 +1,15 @@
-# Contributing a New Skill
+# Contributing to the Rhombus Plugin Marketplace
 
-This guide walks you through creating and publishing a new skill to the Rhombus plugin marketplace.
+This guide walks you through adding new components to the Rhombus plugin marketplace. The bulk of the doc covers **skills** (model-invoked capabilities), with dedicated sections at the bottom for **slash commands** and **MCP servers**.
 
-**Terminology:** A **plugin** is the persona-level installable unit (e.g., `developer`, `user`, `partner`). A **skill** is an individual capability inside a plugin, defined by a `SKILL.md` file. This is the Claude Code spec terminology — keep it consistent.
+**Terminology:** A **plugin** is the persona-level installable unit (e.g., `developer`, `user`, `partner`). Inside a plugin you can add:
+- **Skills** (`skills/<name>/SKILL.md`) — model-invoked
+- **Slash commands** (`commands/<name>.md`) — user-invoked
+- **Agents** (`agents/<name>.md`) — specialized subagents
+- **Hooks** (`hooks/<name>.md` or `.sh`) — event-driven
+- **MCP servers** (`.mcp.json` at plugin root) — external tool integrations
+
+This is the Claude Code spec terminology — keep it consistent.
 
 ## Prerequisites
 
@@ -109,8 +116,48 @@ Keep `SKILL.md` under 500 lines. Move large reference material to separate files
 ### 6. Open a PR
 
 - Branch name: `plugin/<persona>/<skill-name>` (e.g., `plugin/developer/code-review`)
+- For multi-component reworks touching several components at once, use `plugin/<persona>/<version>` (e.g., `plugin/partner/2.0`)
 - PR description: what the skill does, example inputs/outputs, and how you tested it
 - Link to the plugin's README for reviewer context
+
+## Adding a Slash Command
+
+Slash commands live in `plugins/<persona>/commands/<name>.md`. They are **user-invoked** (typed as `/name`) rather than model-invoked. Use commands when the workflow benefits from explicit triggering — side effects, multi-step procedures, or anything the user should choose to run.
+
+Minimum frontmatter:
+
+```yaml
+---
+description: One-line summary shown in the / menu.
+argument-hint: "[input]"
+---
+```
+
+Optional `disable-model-invocation: true` keeps the command slash-only (Claude won't invoke it autonomously — important for side-effectful commands like `/rhombus-client-switch`).
+
+The markdown body is the prompt Claude executes. Use `$ARGUMENTS` to reference user-supplied args. See `plugins/user/commands/rhombus-alerts.md` for a minimal example.
+
+## Adding an MCP Server
+
+Place a `.mcp.json` at the plugin root. Example (from `plugins/developer/.mcp.json`):
+
+```json
+{
+  "mcpServers": {
+    "rhombus": {
+      "command": "npx",
+      "args": ["--yes", "--package", "rhombus-node-mcp", "mcp-server-rhombus"],
+      "env": { "RHOMBUS_API_KEY": "${RHOMBUS_API_KEY}" }
+    },
+    "rhombus-docs": {
+      "type": "http",
+      "url": "https://api-docs.rhombus.community/mcp"
+    }
+  }
+}
+```
+
+Tools surface in Claude as `mcp__<server-name>__<tool-name>`. Skills that want Claude to reach for MCP tools first should name them explicitly in the skill description.
 
 ## Need help?
 

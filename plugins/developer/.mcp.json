@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "rhombus": {
+      "command": "npx",
+      "args": ["--yes", "--package", "rhombus-node-mcp", "mcp-server-rhombus"],
+      "env": {
+        "RHOMBUS_API_KEY": "${RHOMBUS_API_KEY}"
+      }
+    },
+    "rhombus-docs": {
+      "type": "http",
+      "url": "https://api-docs.rhombus.community/mcp"
+    }
+  }
+}

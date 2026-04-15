@@ -1,6 +1,18 @@
 {
   "name": "rhombus-developer",
-  "description": "Tools for building on the Rhombus platform. Includes the full Rhombus API reference (892+ endpoints), API documentation generation, code review, and a hook that suggests CLI equivalents for raw API calls.",
-  "version": "1.1.0",
-  "author": { "name": "Rhombus" }
+  "description": "Build on Rhombus. Auto-configures the official rhombus-node-mcp and docs.rhombus.community MCP servers. Ships six /rhombus-* commands (find-endpoint, schema, curl, sdk, mcp-status, newproject), API-architect and webhook-debugger agents, and five skills covering full API reference (892+ endpoints including Relay/NVR and third-party RTSP), SDK codegen, webhook scaffolding, code review, API doc generation, and edge streaming (RTSP/ONVIF).",
+  "version": "2.0.0",
+  "author": { "name": "Rhombus" },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/rhombus-openapi-freshness.sh"
+          }
+        ]
+      }
+    ]
+  }
 }

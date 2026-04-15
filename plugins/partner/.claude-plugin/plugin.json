@@ -1,7 +1,7 @@
 {
   "name": "rhombus-partner",
-  "description": "Tools for MSP and reseller partners managing multiple client organizations on the Rhombus platform. Includes CLI reference, agents for CLI assistance, alert monitoring, and device management across client orgs, plus command validation.",
-  "version": "1.3.0",
+  "description": "MSP and reseller tooling for managing multiple Rhombus client organizations. Provides a client-selector agent, fleet-ops agent, and client-onboarding agent; a partner CLI skill, cross-client reporting skill, and onboarding skill; six /rhombus-* multi-org commands (clients, client-switch, audit-clients, client-alerts, client-devices, fleet-report); active-client session state via .claude/rhombus-partner.local.md; partner-aware command validation and session-init hooks; and the shared CLI auto-installer.",
+  "version": "2.0.0",
   "author": { "name": "Rhombus" },
   "hooks": {
     "SessionStart": [

@@ -7,6 +7,24 @@ description: Comprehensive guide for working with the Rhombus API and building a
 
 This skill provides comprehensive support for working with the Rhombus API and building applications on the Rhombus platform. Rhombus was built on API-driven micro-services from day one — every feature in the web console, mobile apps, and firmware is backed by the same API endpoints available to developers.
 
+## MCP-First — tool selection order
+
+This plugin auto-attaches two MCP servers. **Always try them before falling back to grep/cURL.**
+
+1. **`mcp__rhombus__*` — Rhombus API MCP (live)**. Call this for anything the user wants to *do*: list cameras, fetch an alert, create a credential, download a clip. It wraps the same API endpoints covered below, with typed arguments and handled auth. Requires `RHOMBUS_API_KEY` in the environment; check `/rhombus-mcp-status` if tools are missing.
+2. **`mcp__rhombus-docs__*` — Rhombus docs MCP (live doc search)**. Call this for "*how do I…*" narrative questions, implementation guides, best practices, and code examples. Tools: `search-documentation`, `get-endpoint-details`, `search-code-examples`.
+3. **Local OpenAPI grep on `references/rhombus-api.json`** — fallback when (a) the MCP is unreachable, (b) you need exact schema drill-down for an endpoint, or (c) you're enumerating every endpoint in a tag.
+4. **Raw cURL** — only when the user explicitly asks for a shell example, or when integrating with a system that needs cURL syntax. See `references/mcp-tool-reference.md` for a task → MCP-tool map.
+
+Decision tree:
+
+```
+User asks to DO something on Rhombus   → mcp__rhombus__* tool call
+User asks HOW something works           → mcp__rhombus-docs__search-documentation
+User asks for a schema/field list       → grep references/rhombus-api.json
+User asks for a cURL example            → emit cURL (last resort)
+```
+
 ## Quick Reference
 
 Always start by reading `references/quickstart.md` for authentication patterns, base URL, and common endpoint examples.
@@ -217,34 +235,22 @@ Rhombus maintains official example repos at `https://github.com/RhombusSystems/`
 - `rhombus-libonvif` — ONVIF library with YOLOX
 - `system-surveyor` — System Surveyor specs and profiles
 
-## Documentation MCP (Live Doc Search)
+## MCP servers (auto-attached by this plugin)
 
-Rhombus provides a Documentation MCP server that gives AI tools live access to the complete developer documentation. This complements the local OpenAPI spec grep approach — use the MCP for narrative docs, implementation guides, and code examples; use local grep for precise endpoint schema lookups.
+This plugin's `.mcp.json` wires two MCP servers automatically — you do not need to run `claude mcp add`.
 
-- **MCP URL**: `https://api-docs.rhombus.community/mcp`
-- **Transport**: HTTP
-- **Available tools**: `search-documentation` (full-text doc search), `get-endpoint-details` (specific endpoint info), `search-code-examples` (implementation snippets)
+| Server | Purpose | Key tools |
+|---|---|---|
+| `rhombus` (from `rhombus-node-mcp`) | Live API access — actually performs operations | `mcp__rhombus__*` (see `references/mcp-tool-reference.md` after first connection for the enumerated tool list) |
+| `rhombus-docs` (HTTP MCP at api-docs.rhombus.community) | Live doc search | `mcp__rhombus-docs__search-documentation`, `mcp__rhombus-docs__get-endpoint-details`, `mcp__rhombus-docs__search-code-examples` |
 
-**Setup in Claude Code:**
-```bash
-claude mcp add --transport http rhombus-docs https://api-docs.rhombus.community/mcp
-```
+Prerequisite for `rhombus`: `RHOMBUS_API_KEY` must be exported in the shell that launched Claude Code. If it isn't, the server fails silently at startup; run `/rhombus-mcp-status` to verify.
 
-**Setup in Cursor / VS Code (`.vscode/mcp.json`):**
-```json
-{
-  "mcpServers": {
-    "rhombus-docs": {
-      "url": "https://api-docs.rhombus.community/mcp",
-      "transport": "http"
-    }
-  }
-}
-```
-
-When to use the Documentation MCP vs. local spec grep: Use the MCP when you need implementation guides, best practices, or narrative documentation. Use local grep on `references/rhombus-api.json` when you need exact parameter schemas, response structures, or to enumerate endpoints in a category.
+Users on Cursor / VS Code with a different plugin host can still use the docs MCP by adding to their own config — config snippet is in `docs/contributing.md`.
 
 ## Generating cURL Examples
+
+Only emit cURL when the user explicitly asks for a shell example, or when the MCP is unavailable. Otherwise, prefer the equivalent `mcp__rhombus__*` tool — it handles auth, typed arguments, and retries automatically.
 
 Every cURL command follows this pattern:
 

@@ -3,22 +3,22 @@
   "owner": { "name": "Rhombus" },
   "metadata": {
     "description": "Rhombus Claude Code plugin marketplace",
-    "version": "2.0.0"
+    "version": "3.0.0"
   },
   "plugins": [
     {
       "name": "rhombus-developer",
-      "description": "Tools for building on the Rhombus platform. Full API reference (846+ endpoints), API doc generation, code review, and smart CLI suggestions.",
+      "description": "Build on Rhombus. Auto-configures the official rhombus-node-mcp and the Rhombus docs MCP, ships six /rhombus-* commands (find-endpoint, schema, curl, sdk, mcp-status, newproject), API-architect and webhook-debugger agents, and five skills covering API reference, SDK codegen, webhook scaffolding, and edge streaming (RTSP/ONVIF).",
       "source": "./plugins/developer"
     },
     {
       "name": "rhombus-user",
-      "description": "Day-to-day Rhombus platform tools. CLI reference, alert monitoring, device management, and command validation.",
+      "description": "Day-to-day Rhombus tools. CLI reference, deployment context, Rhombus MIND AI, support-article link directory, alert + device + footage-investigator agents, five /rhombus-* workflow commands, CLI auto-install and command-validation hooks.",
       "source": "./plugins/user"
     },
     {
       "name": "rhombus-partner",
-      "description": "MSP/reseller tools for managing multiple client organizations. CLI reference, alert monitoring, device management across client orgs.",
+      "description": "MSP and reseller fleet management. Client-selector, fleet-ops, and onboarding agents, cross-client reporting and onboarding skills, six /rhombus-* multi-org commands (clients, client-switch, audit-clients, client-alerts, client-devices, fleet-report), active-client session state, and partner-aware command validation.",
       "source": "./plugins/partner"
     }
   ]

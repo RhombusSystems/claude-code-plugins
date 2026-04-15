@@ -1,7 +1,7 @@
 {
   "name": "rhombus-user",
-  "description": "Day-to-day tools for Rhombus platform users. Includes the Rhombus CLI reference, plus agents for CLI assistance, alert monitoring, and device management. Features a hook for validating rhombus commands.",
-  "version": "1.3.0",
+  "description": "Day-to-day Rhombus platform tools. CLI reference (skill split into CLI, deployment-context, and MIND AI), curated support-article link directory, plus agents for CLI assistance, alert monitoring, device management, and footage investigation. Five /rhombus-* workflow commands (alerts, status, watch, analyze, context-refresh). CLI auto-install on session start and command validation on every bash call.",
+  "version": "2.0.0",
   "author": { "name": "Rhombus" },
   "hooks": {
     "SessionStart": [

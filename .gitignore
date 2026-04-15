@@ -25,8 +25,13 @@ Thumbs.db
 # Local Claude settings
 .claude/settings.local.json
 
-# MCP config (may contain tokens)
-.mcp.json
+# Claude Code worktree scratch (created by `git worktree add` via the Plan agent)
+.claude/worktrees/
+
+# Root-level MCP config (may contain personal tokens/paths).
+# Plugin-level .mcp.json under plugins/*/ is intentionally committed — those
+# ship with the plugin and use ${ENV_VAR} substitutions, not raw secrets.
+/.mcp.json
 
 # Dependencies
 node_modules/
