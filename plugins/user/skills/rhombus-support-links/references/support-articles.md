@@ -64,10 +64,10 @@ Maintenance note: This list needs a quarterly refresh (support.rhombussystems.co
 
 ## Developer
 
-- **API key generation** — search "API key". Developers should prefer the Rhombus Console API Key Settings page directly.
-- **Federated session tokens** — search "federated session token".
+- **API key generation** — in the Rhombus Console, **Settings → Integrations & Developer Resources → API Tokens → Add API Key** (partner organizations: **Settings → API Management**). Developer docs: https://developer.rhombus.com
+- **Federated tokens** (for browsers, video players and LAN streaming) — https://developer.rhombus.com/implementations/lan-streaming
 
-## Community
+## Developer resources and support
 
-- **Developer community forum:** https://rhombus.community (also see `community-channels.md`)
-- **Support contact:** `api@rhombus.com` for dev questions, or file a ticket via the help center.
+- **Developer docs:** https://developer.rhombus.com (also see `community-channels.md`)
+- **Support contact:** `support@rhombus.com`, or file a ticket via the help center.

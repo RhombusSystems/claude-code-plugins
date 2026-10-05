@@ -26,6 +26,8 @@ openapi-generator-cli generate \
   -o <output-dir>
 ```
 
+For EU organizations, set the generated client's base URL to `https://api2.eu.rhombussystems.com` (the spec's `servers` entry is the US host).
+
 Prerequisites check:
 - `openapi-generator-cli` available on PATH (`which openapi-generator-cli`)
 - Network access to `api2.rhombussystems.com`

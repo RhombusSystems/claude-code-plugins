@@ -180,7 +180,7 @@ See `references/workflows.md` for common recipes.
 
 ## API base URL
 
-Default: `https://api2.rhombussystems.com`. Override per-command with `--endpoint-url` or globally via `rhombus configure`.
+Default: `https://api2.rhombussystems.com` (US). EU organizations use `https://api2.eu.rhombussystems.com`: answer `eu` at the `Region (us/eu)` prompt in `rhombus configure`, or override per-command with `--endpoint-url` or per shell with `RHOMBUS_ENDPOINT_URL`. API keys only work in their own region.
 
 ## Relationship to the `rhombus-developer` plugin
 

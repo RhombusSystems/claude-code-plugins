@@ -46,7 +46,8 @@ The generated client handles request serialization but not Rhombus-specific auth
   client.configuration.api_key['x-auth-apikey'] = os.environ['RHOMBUS_API_KEY']
   client.configuration.api_key['x-auth-scheme'] = 'api-token'
   ```
-- **Federated session flow (browser):** Generate a short-lived token via the `/org/generateFederatedSessionToken` endpoint on a server, pass it to the client, and set `x-auth-scheme: federated-session-token`.
+- **Federated token flow (browser, video players, LAN devices):** On a server, mint a short-lived token with `POST /api/org/generateFederatedSessionToken` (`{"durationSec": 3600}`, optional `deviceUUid`) and pass `federatedSessionToken` to the client. The client sends `x-auth-scheme: federated-token` and `x-auth-ft: <token>` (headers, or query parameters on media URLs). The scheme value is exactly `federated-token`, and the token never goes in `x-auth-apikey`.
+- **Region:** the spec's `servers` entry is the US host. For EU organizations, set the client's base URL to `https://api2.eu.rhombussystems.com`.
 
 See `references/codegen-matrix.md` for language-specific auth helper snippets and known gotchas (e.g., TypeScript-fetch's handling of optional fields, Go's pointer-vs-value generation for nullable types).
 

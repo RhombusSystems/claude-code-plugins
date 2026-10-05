@@ -11,7 +11,7 @@ Browser-based OAuth2 PKCE authentication flow.
 1. Opens browser to `https://console.rhombussystems.com/login`
 2. Local callback server on `localhost:11434/callback`
 3. Exchanges authorization code for OAuth token
-4. Creates permanent API key via `/api/integrations/org/submitApiTokenApplication`
+4. Creates a permanent API key for this machine through the OAuth session
 5. Attempts cert-based auth first (ECDSA P-256), falls back to token-based
 6. Detects partner accounts and saves `is_partner` flag
 7. Saves credentials to active profile in `~/.rhombus/credentials`
@@ -124,7 +124,6 @@ Interactive AI chat with Rhombus MIND (backed by Claude).
 - Sends tool definitions so MIND can execute CLI commands locally
 - Handles tool-use loops: submit query → poll for response → execute tool calls → return results
 - Color-coded terminal output: blue (user), green (MIND)
-- APIs used: `/api/chatbot/submitChat`, `/api/chatbot/getChatRecord`
 
 ### rhombus voice
 

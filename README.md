@@ -2,6 +2,8 @@
 
 A plugin marketplace for Claude Code, organized by persona. Install only the plugin relevant to you.
 
+Docs: https://developer.rhombus.com/claude-code-plugins · Support: support@rhombus.com
+
 ## Quick Start
 
 ### 1. Add the marketplace
