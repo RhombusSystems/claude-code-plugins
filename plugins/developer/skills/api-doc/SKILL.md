@@ -31,7 +31,7 @@ Generate clear, complete API documentation from source code.
 
 For each endpoint, document:
 
-- **Method & Path**: `GET /api/v1/users/:id`
+- **Method & Path**: `GET /v1/users/:id`
 - **Description**: What this endpoint does (infer from handler logic and naming)
 - **Authentication**: Required auth (check for auth middleware/decorators)
 - **Parameters**: Path params, query params, headers

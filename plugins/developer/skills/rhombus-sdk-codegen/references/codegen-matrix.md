@@ -16,6 +16,8 @@ Reference tables for generating and using Rhombus API clients in each supported 
 
 ## Auth helper snippets
 
+The snippets use the US base URL. For EU organizations, use `https://api2.eu.rhombussystems.com` (API keys only work in their own region).
+
 ### Python
 
 ```python
@@ -73,15 +75,15 @@ client := rhombus.NewAPIClient(cfg)
 - **TypeScript optional fields**: the fetch generator emits `field?: T`. Node 18's `fetch` serializes `undefined` fields as absent — don't `JSON.stringify` manually.
 - **Python package name collision**: by default the generated package is `openapi_client`, which collides across multiple generated SDKs. Always use `--package-name rhombus` for disambiguation.
 
-## Federated session token pattern (browser apps)
+## Federated token pattern (browser apps)
 
 For browser-based apps, never embed the API key. Instead, run a small server that:
 
 1. Holds `RHOMBUS_API_KEY` securely.
-2. Exposes an endpoint like `POST /api/rhombus-session` that calls `generateFederatedSessionToken` via the SDK.
-3. Returns the short-lived token to the browser.
+2. Exposes an endpoint like `POST /api/rhombus-session` that calls `generateFederatedSessionToken` (`POST /api/org/generateFederatedSessionToken`, body `{"durationSec": 3600}`) via the SDK.
+3. Returns `federatedSessionToken` to the browser.
 
-Browser uses `x-auth-scheme: federated-session-token` with the token in `x-auth-apikey`. See `player-example` repo for a full implementation.
+The browser sends `x-auth-scheme: federated-token` and `x-auth-ft: <token>` as headers, or appends `?x-auth-scheme=federated-token&x-auth-ft=<token>` to media URLs. The scheme value is exactly `federated-token`, and the token never goes in `x-auth-apikey`. For streaming from devices on the LAN, mint device-scoped tokens with `deviceUUid`; LAN devices never accept API keys. See `player-example` repo for a full implementation.
 
 ## Regeneration
 

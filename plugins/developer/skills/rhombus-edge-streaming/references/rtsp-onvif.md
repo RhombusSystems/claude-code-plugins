@@ -1,32 +1,20 @@
 # RTSP / ONVIF / Edge Streaming Reference
 
-Implementation notes for the four edge-streaming scenarios in the `rhombus-edge-streaming` skill.
+Implementation notes for the edge-streaming scenarios in the `rhombus-edge-streaming` skill.
 
-## edgecaster-stream-converter
+## EdgeCaster (edgecaster-stream-converter)
 
-**Install:**
+EdgeCaster re-streams Rhombus cameras as RTSP. It does not bring third-party cameras into Rhombus (use a Rhombus Relay for that).
+
+**Install** (Ubuntu or Debian on a Raspberry Pi 5, mini-PC, or VM), or flash the EdgeCaster Raspberry Pi image:
 
 ```bash
-git clone https://github.com/RhombusSystems/edgecaster-stream-converter
-cd edgecaster-stream-converter
-pip install -r requirements.txt
+curl -fsSL https://raw.githubusercontent.com/RhombusSystems/edgecaster-stream-converter/main/scripts/bootstrap.sh | sudo bash
 ```
 
-**Minimal config (RTSP → Rhombus):**
+**Set up:** open `http://edgecaster.local` (or `http://<device-ip>`), paste a Rhombus API key, switch on the cameras to stream, and copy each camera's RTSP link (`rtsp://<device-ip>:8554/<name>`) into the VMS, NVR, or AI system.
 
-```yaml
-# config.yaml
-source:
-  type: rtsp
-  url: rtsp://user:pass@192.168.1.100:554/stream1
-
-destination:
-  type: rhombus-secure-raw-stream
-  api_key: ${RHOMBUS_API_KEY}
-  target_camera_uuid: AAAAAAAAAAAAAAAAAAAAAA
-```
-
-**Deployment:** Run as a systemd service on a small edge host (RPi 5, mini PC, NUC). One gateway can multiplex several streams; check repo README for resource guidance.
+**Deployment:** Wired Gigabit network recommended. There is no fixed stream limit; capacity depends on the host's network and CPU. See the repo README for details.
 
 ## ONVIF discovery gotchas
 
@@ -38,21 +26,24 @@ destination:
 ## Seekpoint payload shape
 
 ```json
-POST /api/event/createSeekpoint
+POST /api/camera/createCustomFootageSeekpoints
 {
   "cameraUuid": "AAAAAAAAAAAAAAAAAAAAAA",
-  "timestamp": 1712345678000,
-  "durationMs": 3000,
-  "title": "Forklift in aisle 3",
-  "tags": ["forklift", "aisle-3"],
-  "metadata": {
-    "confidence": 0.94,
-    "model": "custom-forklift-v1"
-  }
+  "footageSeekPoints": [
+    {
+      "name": "Forklift aisle 3",
+      "timestampMs": 1712345678000,
+      "description": "custom-forklift-v1, confidence 0.94",
+      "color": "BLUE",
+      "displayOverlay": true
+    }
+  ]
 }
 ```
 
-Response includes a `seekpointUuid` you can reference when linking back to the event from your system.
+- `name` (max 32 characters) and `timestampMs` are required; `description` (max 100 characters), `color` and `displayOverlay` are optional.
+- Send many seekpoints in one call rather than one request per detection.
+- The response carries only `error` / `errorMsg` / `warningMsg`, not seekpoint IDs. Read seekpoints back with `POST /api/camera/getCustomFootageSeekpointsV2`.
 
 ## Player-example server-side token proxy
 
@@ -71,17 +62,18 @@ app.post('/api/rhombus-session', async (req, res) => {
       'x-auth-apikey': process.env.RHOMBUS_API_KEY!,
       'content-type': 'application/json',
     },
-    body: JSON.stringify({ ttlSec: 3600 }),
+    body: JSON.stringify({ durationSec: 3600 }),
   });
   const { federatedSessionToken } = await r.json();
   res.json({ token: federatedSessionToken });
 });
 ```
 
-Browser calls `/api/rhombus-session`, receives the short-lived token, then uses it with `x-auth-scheme: federated-session-token` to fetch media URIs.
+`/api/rhombus-session` is a route on your own server. Your server also calls `POST /api/camera/getMediaUris` with its API key and returns the URIs. The browser then sends the token on every media request as `x-auth-scheme: federated-token` + `x-auth-ft: <token>`, or as `?x-auth-scheme=federated-token&x-auth-ft=<token>` when the player can't set headers. The scheme value is exactly `federated-token`, and the token never goes in `x-auth-apikey`. For LAN device URLs, mint a device-scoped token by adding `deviceUUid` to the request body.
 
 ## Rate-limit considerations for seekpoint posting
 
-- Hard cap: 1,000 req/hr per API key.
-- If your model emits >1,000 events/hour, batch before posting or request a higher rate limit via `api@rhombus.com`.
-- For bursty workloads (e.g., LPR at rush hour), implement exponential backoff on 429 responses.
+- Limits are per organization: every API key and OAuth token in the org shares one token bucket that refills at a per-second rate and allows bursts of roughly 10x that rate. Extra API keys don't add throughput. See `https://developer.rhombus.com/rate-limits`.
+- Batch detections into one `createCustomFootageSeekpoints` call per camera instead of one request per detection.
+- On `429`, wait the `Retry-After` seconds, then retry with exponential backoff and jitter.
+- To request a higher limit, contact `support@rhombus.com`.

@@ -2,8 +2,11 @@
 
 ## Base URL
 ```
-https://api2.rhombussystems.com
+https://api2.rhombussystems.com      # US organizations
+https://api2.eu.rhombussystems.com   # EU organizations
 ```
+
+An organization lives in one region, and its API keys only work against that region's base URL. Paths, headers and payloads are the same in both regions. See https://developer.rhombus.com/api-regions.
 
 ## Authentication
 
@@ -14,19 +17,28 @@ x-auth-scheme: api-token
 x-auth-apikey: YOUR_API_KEY_HERE
 ```
 
-For browser-based apps, use federated session tokens instead of exposing your API key:
+Create the key in the Rhombus Console under **Settings → Integrations & Developer Resources → API Tokens → Add API Key**: enter a **Name**, set **Auth Type** to **Api Token** (the modal defaults to Certificate, which is for mTLS), pick a **Role**, and copy the key (it's shown only once). Partner organizations use **Settings → API Management → Add API Key**.
+
+For browsers, video players and devices on the LAN, use a federated token instead of exposing your API key:
 ```bash
-# Step 1: Server-side — generate a short-lived federated token
+# Step 1: Server-side — mint a short-lived federated token with your API key
 curl -X POST "https://api2.rhombussystems.com/api/org/generateFederatedSessionToken" \
   -H "x-auth-scheme: api-token" \
   -H "x-auth-apikey: YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"durationSec": 3600}'
+# Response: {"federatedSessionToken": "..."}
+# Optional: "deviceUUid" limits the token to one device. Use device-scoped tokens for LAN streaming.
 
-# Step 2: Client-side — use the federated token
-x-auth-scheme: federated-session-token
-x-auth-apikey: FEDERATED_TOKEN_FROM_STEP_1
+# Step 2: Client-side — send the federated token as headers...
+x-auth-scheme: federated-token
+x-auth-ft: FEDERATED_TOKEN_FROM_STEP_1
+
+# ...or, on media URLs and LAN device URLs, as query parameters
+?x-auth-scheme=federated-token&x-auth-ft=FEDERATED_TOKEN_FROM_STEP_1
 ```
+
+The scheme value is exactly `federated-token`, and a federated token never goes in `x-auth-apikey`. Devices on the LAN never accept API keys; they accept only federated tokens.
 
 ## Standard cURL Pattern
 
@@ -45,7 +57,7 @@ curl -X POST "https://api2.rhombussystems.com/api/ENDPOINT_PATH" \
 ```python
 import requests
 
-api_url = "https://api2.rhombussystems.com"
+api_url = "https://api2.rhombussystems.com"  # EU: "https://api2.eu.rhombussystems.com"
 session = requests.session()
 session.headers = {
     "Accept": "application/json",
@@ -84,8 +96,8 @@ The Rhombus API is organized into 65+ categories. The most commonly used:
 - **Doorbell Camera** — Doorbell-specific operations
 
 ### Access Control
-- **Access Control** — Credentials, groups, grants, revocations, doors
-- **Door** — Door state, lock/unlock operations
+- **Access Control** — Credentials, groups, grants, revocations, door unlock
+- **Door** — Door sensors (open/close state and events)
 - **Door Controller** — Door controller hardware
 - **Elevator** — Elevator floor access control
 - **Guest Management Kiosk** — Visitor management
@@ -118,32 +130,29 @@ The Rhombus API is organized into 65+ categories. The most commonly used:
 - **Permission** — RBAC configuration
 
 ### Integrations
-- **Developer** — API keys, webhooks
-- **Webhook Integrations** — Webhook management
+- **Developer** — Event listeners
+- **Webhook Integrations** — Organization webhooks and their secrets
 - **OAuth** — OAuth flows
 - **Incident/Service Management Integrations** — PagerDuty, ServiceNow, etc.
 
 ## Common Endpoint Patterns
 
+All paths start with `/api/<service>/` and every endpoint is `POST` with a JSON body (send `{}` when there are no fields).
+
 ### Listing Resources
-Most list endpoints follow this pattern:
-- Path: `/api/category/list*` or `/api/category/getMinimal*`
-- Method: POST
+- Path: `/api/<service>/getMinimal...` (for example `/api/camera/getMinimalCameraStateList`), `/api/<service>/get...` or `/api/<service>/find...`
 - Body: Typically minimal or empty (`{}`)
 
 ### Creating Resources
-- Path: `/api/category/create*`
-- Method: POST
+- Path: `/api/<service>/create...`
 - Body: Resource properties
 
 ### Updating Resources
-- Path: `/api/category/update*`
-- Method: POST
+- Path: `/api/<service>/update...`
 - Body: Resource UUID + updated properties
 
 ### Deleting Resources
-- Path: `/api/category/delete*`
-- Method: POST
+- Path: `/api/<service>/delete...`
 - Body: Resource UUID
 
 ## Frequently Used Endpoints
@@ -152,22 +161,18 @@ Most list endpoints follow this pattern:
 ```bash
 # List all cameras
 POST /api/camera/getMinimalCameraStateList
+Body: {}
 
-# Get camera details
-POST /api/camera/getCamera
+# Get media URIs: live streams (wanLiveMpdUri, wanLiveM3u8Uri, wanLiveH264Uri),
+# VOD templates (wanVodMpdUriTemplate, wanVodM3u8UriTemplate) and LAN URIs
+POST /api/camera/getMediaUris
 Body: {"cameraUuid": "..."}
-
-# Get VOD URI for footage
-POST /api/camera/getVodUri
-Body: {"cameraUuid": "...", "startTime": 1234567890, "duration": 3600}
-
-# Get media URIs for streaming (used with DashJS player)
-POST /camera/getMediaUris
-Body: {"cameraUuid": "..."}
+# Recorded footage: in a VOD template, replace {START_TIME} with a Unix timestamp
+# in seconds and {DURATION} with a length in seconds.
 
 # Get exact frame (supports cropping for vehicle/face extraction)
-POST /video/getExactFrameUri
-Body: {"cameraUuid": "...", "timestamp": 1234567890000}
+POST /api/video/getExactFrameUri
+Body: {"cameraUuid": "...", "timestampMs": 1234567890000}
 
 # Create shared live stream (for iframe embedding)
 POST /api/camera/createSharedLiveVideoStream
@@ -176,50 +181,57 @@ Body: {"cameraUuid": "..."}
 
 ### Access Control
 ```bash
-# List access control doors
-POST /api/door/getMinimalDoorStateList
+# List access-controlled doors
+POST /api/component/findAccessControlledDoors
+Body: {}
 
-# Lock/unlock a door
-POST /api/door/updateDoorLockState
-Body: {"doorUuid": "...", "lockState": "UNLOCKED"}
+# Unlock an access-controlled door
+POST /api/accesscontrol/unlockAccessControlledDoor
+Body: {"accessControlledDoorUuid": "..."}
 
 # Create access credential
 POST /api/accesscontrol/createStandardCsnCredential
-Body: {"csn": "...", "userId": "..."}
+Body: {"credentialValue": "...", "userUuid": "..."}
 
-# Get access events
-POST /api/event/searchAccessControlActivityEvent
-Body: {"startTime": 1234567890, "endTime": 1234567890}
+# Get access events for a door
+POST /api/component/findPaginatedComponentEventsByAccessControlledDoor
+Body: {"accessControlledDoorUuid": "...", "createdAfterMs": 1234567890000, "createdBeforeMs": 1234567990000}
+
+# Door sensors (open/close), not access-controlled doors
+POST /api/door/getMinimalDoorStateList
 ```
 
 ### User Management
 ```bash
 # List users
-POST /api/user/getOrgUserList
+POST /api/user/getUsersInOrg
+Body: {}
 
 # Create user
 POST /api/user/createUser
-Body: {"email": "...", "firstName": "...", "lastName": "..."}
+Body: {"email": "...", "name": "..."}
 ```
 
 ### Location Management
 ```bash
 # List locations
 POST /api/location/getLocations
+Body: {}
 
-# Get location hierarchy
-POST /api/location/getLocationHierarchy
+# Get one location
+POST /api/location/getLocation
+Body: {"locationUuid": "..."}
 ```
 
 ### IoT / Sensors
 ```bash
-# Get sensor data
-POST /api/sensor/getSensorData
-Body: {"sensorUuid": "...", "startTime": 1234567890, "endTime": 1234567890}
+# List environmental (climate) sensors and their current readings
+POST /api/climate/getMinimalClimateStateList
+Body: {}
 
-# Get climate data
-POST /api/climate/getClimateData
-Body: {"sensorUuid": "...", "startTime": 1234567890, "endTime": 1234567890}
+# Get climate events for one sensor
+POST /api/climate/getClimateEventsForSensor
+Body: {"sensorUuid": "...", "createdAfterMs": 1234567890000, "createdBeforeMs": 1234567990000}
 ```
 
 ## Response Format
@@ -241,13 +253,14 @@ Timestamps are Unix epoch time in milliseconds:
 ```
 
 ### Pagination
-Many list endpoints support pagination:
+Pagination fields vary by endpoint, so check each request schema. The most common pattern is `maxPageSize` plus `lastEvaluatedKey`: send the `lastEvaluatedKey` from the previous response to get the next page, and stop when the response has none.
 ```json
 {
-  "pageSize": 100,
-  "pageToken": "optional_token_for_next_page"
+  "maxPageSize": 100,
+  "lastEvaluatedKey": "value_from_previous_response"
 }
 ```
+Other endpoints use `limit`, `maxResults` with `lastTimestampMs`/`lastUuid`, or a nested `pageRequest` object.
 
 ## SDK Client Generation
 
@@ -265,8 +278,14 @@ Supported generators: python, typescript-fetch, java, csharp, go, php, and many 
 Common error responses:
 - `401` — Authentication failed (check API key and headers)
 - `400` — Bad request (check request body format)
+- `403` with "Invalid api key" — often a key from the other region (US vs EU)
 - `404` — Resource not found
+- `429` — Rate limited: wait the `Retry-After` header's seconds, then retry with exponential backoff and jitter
 - `500` — Server error (retry with exponential backoff)
+
+## Rate Limits
+
+Limits are enforced per organization. Every API key and OAuth token in the organization shares one token bucket, so adding keys doesn't add throughput. The bucket refills at a per-second rate and allows bursts of roughly 10x that rate. See https://developer.rhombus.com/rate-limits.
 
 ## Best Practices
 
@@ -276,6 +295,6 @@ Common error responses:
 4. **Handle pagination** — Large result sets require pagination
 5. **Use minimal endpoints when possible** — `getMinimal*` endpoints return less data and are faster
 6. **Cache location and device lists** — These change infrequently
-7. **Use federated tokens for browser apps** — Never expose API keys in frontend code
+7. **Use federated tokens for browser apps** — Never expose API keys in frontend code; send `x-auth-scheme: federated-token` + `x-auth-ft`
 8. **Use server-side proxies for streaming** — Protects API tokens and resolves CORS issues
 9. **Check for deprecated endpoints** — Some older endpoints are marked as deprecated

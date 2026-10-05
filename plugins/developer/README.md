@@ -13,7 +13,7 @@ Tools for engineers building on the Rhombus platform. Version **2.0.0**.
 
 The plugin wires MCP servers automatically via `.mcp.json`. You only need:
 
-1. **`RHOMBUS_API_KEY`** exported in the shell that launches Claude Code (generate from Rhombus Console → API Key Settings).
+1. **`RHOMBUS_API_KEY`** exported in the shell that launches Claude Code. Create it in the Rhombus Console under **Settings → Integrations & Developer Resources → API Tokens → Add API Key** with Auth Type **Api Token** (partner organizations: **Settings → API Management → Add API Key**).
 2. **Node 18+** on PATH so `npx` can fetch `rhombus-node-mcp` on first run.
 
 Verify with `/rhombus-mcp-status`.
@@ -40,10 +40,10 @@ Verify with `/rhombus-mcp-status`.
 
 | Skill | Triggers when user asks about |
 |---|---|
-| `rhombus-api` | Rhombus API, endpoints, cURL, any "how do I build X on Rhombus" question (covers 892+ endpoints inc. Relay/NVR + third-party RTSP) |
+| `rhombus-api` | Rhombus API, endpoints, cURL, any "how do I build X on Rhombus" question (covers 980+ endpoints inc. Relay/NVR + third-party RTSP) |
 | `rhombus-sdk-codegen` | Scaffolding typed SDK clients (Python, TS, Java, Go, C#) |
 | `rhombus-webhook-receiver` | Building webhook listeners (Express, FastAPI, Lambda) |
-| `rhombus-edge-streaming` | RTSP, ONVIF, Secure Raw Streams, custom seekpoints, embedded player |
+| `rhombus-edge-streaming` | RTSP, ONVIF, Secure Raw Streams, custom seekpoints, LAN streaming, embedded player |
 | `code-review` | Generic code review |
 | `api-doc` | Generic API doc generation |
 
@@ -53,6 +53,11 @@ Verify with `/rhombus-mcp-status`.
 |---|---|---|
 | `rhombus-api-intercept` | PreToolUse (Bash) | Suggests MCP tool → CLI → cURL order when raw Rhombus HTTP calls are detected |
 | `rhombus-openapi-freshness.sh` | SessionStart | Warns if bundled OpenAPI spec is >90 days old |
+
+## Docs and support
+
+- Developer docs: https://developer.rhombus.com
+- Support: support@rhombus.com
 
 ## Typical workflow
 

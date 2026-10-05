@@ -82,4 +82,4 @@ Annotated index of the public `RhombusSystems/*` repos, with "when to use" guida
 
 ## Recency note
 
-Recency of repos varies. Before copying patterns, check the repo's last commit date — anything untouched for >18 months may use older auth patterns (e.g., pre-federated-session-token). When in doubt, prefer `player-example`, `rhombus-api-examples-python`, and `rhombus-cli` — these are the actively maintained references.
+Recency of repos varies. Before copying patterns, check the repo's last commit date — anything untouched for >18 months may use older auth patterns (e.g., API keys in browser code instead of federated tokens). When in doubt, prefer `player-example`, `rhombus-api-examples-python`, and `rhombus-cli` — these are the actively maintained references.

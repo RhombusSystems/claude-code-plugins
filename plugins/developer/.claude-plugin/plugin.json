@@ -1,7 +1,7 @@
 {
   "name": "rhombus-developer",
-  "description": "Build on Rhombus. Auto-configures the official rhombus-node-mcp and docs.rhombus.community MCP servers. Ships six /rhombus-* commands (find-endpoint, schema, curl, sdk, mcp-status, newproject), API-architect and webhook-debugger agents, and five skills covering full API reference (892+ endpoints including Relay/NVR and third-party RTSP), SDK codegen, webhook scaffolding, code review, API doc generation, and edge streaming (RTSP/ONVIF).",
-  "version": "2.0.0",
+  "description": "Build on Rhombus. Auto-configures the official rhombus-node-mcp and the Rhombus docs MCP servers. Ships six /rhombus-* commands (find-endpoint, schema, curl, sdk, mcp-status, newproject), API-architect and webhook-debugger agents, and five skills covering full API reference (980+ endpoints including Relay/NVR and third-party RTSP), SDK codegen, webhook scaffolding, code review, API doc generation, and edge streaming (RTSP/ONVIF). Docs: https://developer.rhombus.com",
+  "version": "2.0.1",
   "author": { "name": "Rhombus" },
   "hooks": {
     "SessionStart": [

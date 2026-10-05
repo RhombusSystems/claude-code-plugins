@@ -7,9 +7,9 @@ type: prompt
 
 Inspect the bash command about to be executed. If it contains a `curl`, `wget`, or `fetch` call targeting any of these Rhombus API domains:
 
-- `api2.rhombussystems.com`
+- `api2.rhombussystems.com` (EU: `api2.eu.rhombussystems.com`)
 - `api.rhombussystems.com`
-- `media.rhombussystems.com`
+- `media.rhombussystems.com` (EU: `media.eu.rhombussystems.com`)
 - `auth.rhombussystems.com`
 
 Then surface a suggestion in this priority order (do NOT block — only suggest):

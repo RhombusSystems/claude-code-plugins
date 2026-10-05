@@ -31,7 +31,8 @@ See `references/support-articles.md` for the full, categorized link sheet. The m
 | Alert rule configuration | https://support.rhombussystems.com/hc/en-us — "alert rules" |
 | User + role management | https://support.rhombussystems.com/hc/en-us — "users" / "roles" |
 | License management | https://support.rhombussystems.com/hc/en-us — "license" |
-| Community forum | https://rhombus.community |
+| Developer docs (API, webhooks, SDKs) | https://developer.rhombus.com |
+| Contact Rhombus Support | support@rhombus.com |
 
 ## How to respond
 

@@ -2,65 +2,68 @@
 
 Quick map: common API tasks → MCP tool to call first.
 
-The exact tool names depend on the version of `rhombus-node-mcp` you have connected. Run `/rhombus-mcp-status` to confirm. Tool names surface as `mcp__rhombus__<tool>` in Claude.
+`rhombus-node-mcp` exposes a small set of task-level tools (for example `camera-tool`, `access-control-tool`), not one tool per endpoint. Most tools take a `requestType` (or `eventType` / `queryType`) argument that selects the operation. Tool names surface as `mcp__rhombus__<tool>` in Claude. The exact set depends on the version of `rhombus-node-mcp` you have connected; run `/rhombus-mcp-status` to confirm.
+
+Every fallback endpoint below exists in the bundled spec (`rhombus-api.json`). All are `POST`.
 
 ## Cameras
 
-| Task | MCP tool (typical) | Fallback endpoint |
+| Task | MCP tool | Fallback endpoint |
 |---|---|---|
-| List cameras | `mcp__rhombus__getMinimalCameraStateList` | `POST /api/camera/getMinimalCameraStateList` |
-| Fetch camera detail | `mcp__rhombus__getCameraState` | `POST /api/camera/getCameraState` |
-| Get media URIs | `mcp__rhombus__getMediaUris` | `POST /api/camera/getMediaUris` |
-| VOD clip URL | `mcp__rhombus__getVodUri` | `POST /api/camera/getVodUri` |
-| Exact frame | `mcp__rhombus__getExactFrameUri` | `POST /api/video/getExactFrameUri` |
-| Create shared stream | `mcp__rhombus__createSharedLiveVideoStream` | `POST /api/camera/createSharedLiveVideoStream` |
+| List cameras | `mcp__rhombus__get-entity-tool` | `POST /api/camera/getMinimalCameraStateList` |
+| Camera settings | `mcp__rhombus__camera-tool` (`get-settings`) | `POST /api/deviceconfig/getFacetedConfig` |
+| Get media URIs (live and VOD templates) | `mcp__rhombus__camera-tool` (`get-media-uris`) | `POST /api/camera/getMediaUris` |
+| VOD clip URL | `mcp__rhombus__camera-tool` (`get-media-uris`) | `POST /api/camera/getMediaUris`, then fill `{START_TIME}` / `{DURATION}` (seconds) in `wanVodMpdUriTemplate` |
+| Exact frame | `mcp__rhombus__camera-tool` (`image`) | `POST /api/video/getExactFrameUri` |
+| Create shared stream | none | `POST /api/camera/createSharedLiveVideoStream` |
 
 ## Alerts and events
 
-| Task | MCP tool (typical) | Fallback endpoint |
+| Task | MCP tool | Fallback endpoint |
 |---|---|---|
-| Recent alerts | `mcp__rhombus__getRecentAlerts` | `POST /api/alert/getRecentAlerts` |
-| Search events | `mcp__rhombus__searchEvents` | `POST /api/eventsearch/search` |
-| Create custom event | `mcp__rhombus__createEvent` | `POST /api/event/createEvent` |
-| Create seekpoint | `mcp__rhombus__createSeekpoint` | `POST /api/event/createSeekpoint` |
+| Recent alerts | `mcp__rhombus__policy-alerts-tool` | `POST /api/event/getPolicyAlerts` |
+| Device and access events | `mcp__rhombus__events-tool` | `POST /api/component/findPaginatedComponentEventsByAccessControlledDoor` (door events); per-device `get...Events...` endpoints for sensors |
+| Saved clips | `mcp__rhombus__clips-tool` | `POST /api/event/getSavedClipsV2` |
+| Create custom seekpoints | none | `POST /api/camera/createCustomFootageSeekpoints` |
 
 ## Access control
 
-| Task | MCP tool (typical) | Fallback endpoint |
+| Task | MCP tool | Fallback endpoint |
 |---|---|---|
-| Create credential | `mcp__rhombus__createStandardCsnCredential` | `POST /api/accesscontrol/createStandardCsnCredential` |
-| Assign credential | `mcp__rhombus__assignAccessControlCredential` | `POST /api/accesscontrol/assignAccessControlCredential` |
-| Create access grant | `mcp__rhombus__createAccessGrant` | `POST /api/accesscontrol/createAccessGrant` |
-| Door unlock | `mcp__rhombus__unlockDoor` | `POST /api/door/unlockDoor` |
+| List access-controlled doors | `mcp__rhombus__get-entity-tool` | `POST /api/component/findAccessControlledDoors` |
+| Create credential | none | `POST /api/accesscontrol/createStandardCsnCredential` |
+| Assign credential | `mcp__rhombus__access-control-tool` | `POST /api/accesscontrol/assignAccessControlCredential` |
+| Create access grant | `mcp__rhombus__access-control-tool` | `POST /api/accesscontrol/createAccessGrant` |
+| Door unlock | `mcp__rhombus__access-control-tool` | `POST /api/accesscontrol/unlockAccessControlledDoor` |
 
 ## Vehicle / LPR
 
-| Task | MCP tool (typical) | Fallback endpoint |
+| Task | MCP tool | Fallback endpoint |
 |---|---|---|
-| Search vehicle events | `mcp__rhombus__searchVehicleEvents` | `POST /api/vehicle/searchVehicleEvents` |
-| Add known plate | `mcp__rhombus__createKnownVehicle` | `POST /api/vehicle/createKnownVehicle` |
+| Search vehicle events | `mcp__rhombus__lpr-tool` | `POST /api/vehicle/getVehicleEvents` |
+| Save a known plate | `mcp__rhombus__lpr-tool` | `POST /api/vehicle/saveVehicle` |
 
 ## Face recognition
 
-| Task | MCP tool (typical) | Fallback endpoint |
+| Task | MCP tool | Fallback endpoint |
 |---|---|---|
-| Add known person | `mcp__rhombus__createKnownPerson` | `POST /api/facerecognition/createKnownPerson` |
-| Search FR events | `mcp__rhombus__searchFaceRecognitionEvents` | `POST /api/facerecognition/searchEvents` |
+| Add known person | none | `POST /api/faceRecognition/person/createPerson` |
+| Search face events | `mcp__rhombus__faces-tool` | `POST /api/faceRecognition/faceEvent/findFaceEventsByOrg` |
 
 ## Webhooks
 
-| Task | MCP tool (typical) | Fallback endpoint |
+| Task | MCP tool | Fallback endpoint |
 |---|---|---|
-| List webhooks | `mcp__rhombus__getWebhooks` | `POST /api/developer/getWebhooks` |
-| Create webhook | `mcp__rhombus__createWebhook` | `POST /api/developer/createWebhook` |
-| Delete webhook | `mcp__rhombus__deleteWebhook` | `POST /api/developer/deleteWebhook` |
+| List organization webhooks and secrets | none | `POST /api/integrations/webhooks/getWebhookIntegration` |
+| Add or change an organization webhook | none | `POST /api/integrations/webhooks/updateWebhookIntegrationV2` (pass the current settings as `updatedWebhookSettings`; add `webhookUrl` to create one, which returns its `webhookSecret`) |
+| Rule with a webhook action | `mcp__rhombus__rules-tool` | `POST /api/rules/createRule`, `POST /api/rules/updateRule` (response `webhookSecrets`) |
 
 ## Lockdown and emergency
 
-| Task | MCP tool (typical) | Fallback endpoint |
+| Task | MCP tool | Fallback endpoint |
 |---|---|---|
-| Execute lockdown plan | `mcp__rhombus__executeLockdownPlan` | `POST /api/lockdown/executePlan` |
-| Release lockdown | `mcp__rhombus__releaseLockdown` | `POST /api/lockdown/releasePlan` |
+| Activate lockdown | `mcp__rhombus__access-control-tool` | `POST /api/accesscontrol/lockdownPlan/activateLockdownForLocation` |
+| Release lockdown | `mcp__rhombus__access-control-tool` | `POST /api/accesscontrol/lockdownPlan/deactivateLockdownForLocation` |
 
 ## Discovering tools not in this table
 

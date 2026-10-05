@@ -1,6 +1,6 @@
 ---
 name: rhombus-api
-description: Comprehensive guide for working with the Rhombus API and building applications on the Rhombus platform. Use when the user asks questions about the Rhombus API, requests cURL examples, needs endpoint documentation, wants to build apps integrating Rhombus cameras/access control/sensors, asks "How do I [X] using the Rhombus API", or asks about streaming video, LPR, face recognition, webhooks, door controllers, IoT sensors, alarm monitoring, relay/NVR management, third-party RTSP cameras, or any Rhombus development task. Also trigger when the user mentions Rhombus platform capabilities, wants to generate SDK clients, or references the Rhombus OpenAPI spec. Covers all 65+ API service categories across 892+ endpoints including camera management, access control, IoT sensors, face recognition, vehicle/LPR, alarm monitoring, lockdown plans, occupancy, elevators, relay/NVR, webhooks, user management, and more.
+description: Comprehensive guide for working with the Rhombus API and building applications on the Rhombus platform. Use when the user asks questions about the Rhombus API, requests cURL examples, needs endpoint documentation, wants to build apps integrating Rhombus cameras/access control/sensors, asks "How do I [X] using the Rhombus API", or asks about streaming video, LPR, face recognition, webhooks, door controllers, IoT sensors, alarm monitoring, relay/NVR management, third-party RTSP cameras, or any Rhombus development task. Also trigger when the user mentions Rhombus platform capabilities, wants to generate SDK clients, or references the Rhombus OpenAPI spec. Covers all 65+ API service categories across 980+ endpoints including camera management, access control, IoT sensors, face recognition, vehicle/LPR, alarm monitoring, lockdown plans, occupancy, elevators, relay/NVR, webhooks, user management, and more.
 ---
 
 # Rhombus API Skill
@@ -31,15 +31,13 @@ Always start by reading `references/quickstart.md` for authentication patterns, 
 
 ## Key Resources
 
-- **Base URL**: `https://api2.rhombussystems.com`
-- **OpenAPI Spec (live)**: `https://api2.rhombussystems.com/api/openapi/public.json`
-- **OpenAPI Spec (local)**: `references/rhombus-api.json` (138,595 lines, 892 endpoints)
-- **Developer Docs (beta)**: `https://api-docs.rhombus.community/`
+- **Base URL**: US `https://api2.rhombussystems.com`, EU `https://api2.eu.rhombussystems.com`. An organization lives in one region and its API keys only work against that region's base URL; paths, headers and payloads are identical. See `https://developer.rhombus.com/api-regions`.
+- **OpenAPI Spec (live)**: `https://api2.rhombussystems.com/api/openapi/public.json` (EU: `https://api2.eu.rhombussystems.com/api/openapi/public.json`)
+- **OpenAPI Spec (local)**: `references/rhombus-api.json` (167,856 lines, 986 endpoints)
+- **Developer Docs**: `https://developer.rhombus.com/`
 - **Documentation MCP**: `https://api-docs.rhombus.community/mcp` (live doc search for AI tools)
-- **Docs Index (for AI)**: `https://api-docs.rhombus.community/llms.txt`
-- **Legacy Docs**: `https://apidocs.rhombussystems.com/`
-- **Developer Community**: `https://rhombus.community`
-- **Support**: `api@rhombus.com`
+- **Docs Index (for AI)**: `https://developer.rhombus.com/llms.txt`
+- **Support**: `support@rhombus.com`
 
 ## Authentication
 
@@ -50,7 +48,21 @@ x-auth-scheme: api-token
 x-auth-apikey: YOUR_API_KEY
 ```
 
-There is also a federated session token flow for browser-based apps where you cannot expose the API key directly. Generate a short-lived token via `/org/generateFederatedSessionToken` and use it with `x-auth-scheme: federated-session-token`.
+Customers create API keys in the Rhombus Console under **Settings → Integrations & Developer Resources → API Tokens → Add API Key** (choose Auth Type **Api Token** for header-based keys; the modal defaults to Certificate). Partner organizations use **Settings → API Management → Add API Key**.
+
+### Federated tokens (browsers, video players, LAN devices)
+
+Use a federated token anywhere you can't safely put your API key.
+
+1. **Mint it on your server** with your API key: `POST /api/org/generateFederatedSessionToken` with body `{"durationSec": 3600}`. Optional fields: `deviceUUid` (limits the token to one device; use this for LAN streaming) and `domain`. The response is `{"federatedSessionToken": "..."}`.
+2. **Send it** as `x-auth-scheme: federated-token` plus `x-auth-ft: <token>`, either as headers or, on media URLs and LAN device URLs, as query parameters: `?x-auth-scheme=federated-token&x-auth-ft=<token>`.
+
+Rules:
+- The scheme value is exactly `federated-token` (no other spelling works).
+- A federated token never goes in `x-auth-apikey`.
+- Devices on the customer's LAN never accept API keys. They accept only federated tokens, ideally device-scoped with `deviceUUid`. A device-scoped token can't call the cloud API.
+
+Details: `https://developer.rhombus.com/implementations/lan-streaming`.
 
 ## Complete API Category Reference
 
@@ -60,7 +72,7 @@ The Rhombus API is organized into **65+ service categories**. When searching the
 - `"Camera Webservice"` — Camera CRUD, settings, snapshots, VOD URIs, media URIs, shared streams
 - `"Component Webservice"` — Device lifecycle, firmware, health monitoring across all device types
 - `"Door Controller Webservice"` — Door controller hardware configuration and monitoring
-- `"Door Webservice"` — Logical door state, lock/unlock, door events
+- `"Door Webservice"` — Door **sensors** (open/close state and events). To lock or unlock an access-controlled door, use `POST /api/accesscontrol/unlockAccessControlledDoor` (Access Control Webservice); list access-controlled doors with `POST /api/component/findAccessControlledDoors` (Component Webservice)
 - `"Doorbell Camera Webservice"` — Doorbell-specific camera operations
 - `"Sensor Webservice"` — IoT sensor data retrieval (environmental, motion)
 - `"Climate Webservice"` — Temperature, humidity, air quality sensor data
@@ -113,8 +125,8 @@ The Rhombus API is organized into **65+ service categories**. When searching the
 - `"Partner Webservice"` — Partner/reseller operations
 
 ### Integrations & Developer
-- `"Developer Webservice"` — API key management, webhook configuration
-- `"Webhook Integrations Webservice"` — Webhook endpoint management
+- `"Developer Webservice"` — Event listeners (`/api/developer/createEventListener`, `getAllEventListeners`, `deleteEventListener`)
+- `"Webhook Integrations Webservice"` — Organization webhooks (`/api/integrations/webhooks/getWebhookIntegration`, `updateWebhookIntegrationV2`)
 - `"Integrations Webservice"` — General integration configuration
 - `"Org Integrations Webservice"` — Organization-level integrations
 - `"Incident Management Integrations Webservice"` — Incident management (e.g., PagerDuty)
@@ -133,7 +145,7 @@ The Rhombus API is organized into **65+ service categories**. When searching the
 
 ## Working with the API Spec
 
-The complete OpenAPI spec is at `references/rhombus-api.json` (138,595 lines). Never try to read it in full. Use targeted grep searches.
+The complete OpenAPI spec is at `references/rhombus-api.json` (167,856 lines). Never try to read it in full. Use targeted grep or `jq` searches. Note that an operationId does not always match the last path segment (for example, `POST /api/camera/getMediaUris` has operationId `getCameraMediaUris`).
 
 ### Search Patterns
 
@@ -144,7 +156,7 @@ grep -i "keyword" references/rhombus-api.json | grep '"operationId"'
 
 **List ALL endpoints in a category:**
 ```bash
-grep -B5 '"tags" : \[ "Camera Webservice"' references/rhombus-api.json | grep '"operationId"'
+jq -r '.paths | to_entries[] | .key as $p | .value[] | select(.tags[0] == "Camera Webservice") | "\(.operationId)  \($p)"' references/rhombus-api.json
 ```
 
 **Count endpoints per category:**
@@ -174,7 +186,7 @@ grep '"operationId" : "create' references/rhombus-api.json
 
 **Find deprecated endpoints:**
 ```bash
-grep -B5 '"deprecated" : true' references/rhombus-api.json | grep '"operationId"'
+grep -A3 '"deprecated" : true' references/rhombus-api.json | grep '"operationId"'
 ```
 
 **Extract request body schema for an endpoint:**
@@ -201,7 +213,7 @@ Rhombus maintains official example repos at `https://github.com/RhombusSystems/`
 ### player-example (CURRENT — recommended reference)
 - **Repo**: `https://github.com/RhombusSystems/player-example`
 - **What it does**: Lightweight HTML/JS camera stream player using DashJS
-- **Key patterns**: Federated session token auth → getMediaUris → DashJS MPEG-DASH player
+- **Key patterns**: Server mints a federated token and calls getMediaUris → browser plays the MPEG-DASH URI in DashJS with `x-auth-scheme=federated-token&x-auth-ft=<token>` on each media request
 - **Architecture**: Requires server-side proxy to protect API keys (never expose keys in frontend code)
 - **When to reference**: Any video streaming, camera player, or embedded video implementation
 
@@ -264,6 +276,8 @@ curl -X POST "https://api2.rhombussystems.com/api/ENDPOINT_PATH" \
   }'
 ```
 
+For EU organizations, replace the host with `https://api2.eu.rhombussystems.com`.
+
 Checklist: both auth headers present, POST method, Content-Type set, JSON body formatted, required vs optional fields annotated, realistic example values (base64 url-safe UUIDs like `"AAAAAAAAAAAAAAAAAAAAAA"`, millisecond epoch timestamps like `1234567890000`).
 
 ## SDK Client Generation
@@ -284,32 +298,36 @@ openapi-generator-cli generate \
 # Java, C#, Go, PHP, etc. — same pattern, swap the -g flag
 ```
 
+The spec's `servers` entry lists only the US host. For EU organizations, set the generated client's base URL to `https://api2.eu.rhombussystems.com`.
+
 The JavaScript examples repo uses Rhombus Codegen for typed stubs — this is an alternative to openapi-generator.
 
 ## Common Workflows
 
 ### Video Streaming (Browser)
-1. Server generates federated token: `POST /org/generateFederatedSessionToken`
-2. Server fetches media URIs: `POST /camera/getMediaUris` with cameraUuid
-3. Client initializes DashJS player with returned MPEG-DASH URI
+1. Server mints a federated token: `POST /api/org/generateFederatedSessionToken` with `{"durationSec": 3600}` → `federatedSessionToken`
+2. Server fetches media URIs with its API key: `POST /api/camera/getMediaUris` with `{"cameraUuid": "..."}` → `wanLiveMpdUri` (also `wanLiveM3u8Uri`, `wanLiveH264Uri`)
+3. Browser initializes DashJS with the MPEG-DASH URI and appends `x-auth-scheme=federated-token&x-auth-ft=<token>` to every media request
 4. See `player-example` repo for full implementation
 
 ### Video Retrieval (VOD / Clips)
-1. Get camera list: `POST /camera/getMinimalCameraStateList`
-2. Get VOD URI: `POST /camera/getVodUri` with cameraUuid, startTime, duration
-3. Download from returned URI with auth headers
-4. For exact frames: `POST /video/getExactFrameUri` (supports cropping)
+1. Get camera list: `POST /api/camera/getMinimalCameraStateList`
+2. Get the VOD URI template: `POST /api/camera/getMediaUris` with `{"cameraUuid": "..."}` → `wanVodMpdUriTemplate` (or `wanVodM3u8UriTemplate`)
+3. Replace `{START_TIME}` with a Unix timestamp in **seconds** and `{DURATION}` with a length in seconds
+4. Fetch the manifest and every segment with auth: a federated token (`x-auth-scheme: federated-token` + `x-auth-ft`, as headers or query parameters), or API-key headers from a server-side client
+5. For exact frames: `POST /api/video/getExactFrameUri` with `{"cameraUuid": "...", "timestampMs": 1712345678000}` → `frameUri` (optional crop: `permyriadCropX`, `permyriadCropY`, `permyriadCropWidth`, `permyriadCropHeight`)
 
 ### Shared Stream Embedding (iFrame)
-1. Create shared stream: `POST /camera/createSharedLiveVideoStream`
+1. Create shared stream: `POST /api/camera/createSharedLiveVideoStream` with `{"cameraUuid": "..."}` → `sharedLiveVideoStreamUrl`
 2. Embed returned URL in iframe: `<iframe src="SHARED_STREAM_URL"></iframe>`
 3. URL params: `disableautoplay`, `hideevents`, `realtime`, `showheader` (true/false)
 
 ### Access Control Setup
-1. Create user: `POST /user/createUser`
-2. Create credential: `POST /accesscontrol/createStandardCsnCredential`
-3. Assign credential: `POST /accesscontrol/assignAccessControlCredential`
-4. Create access grant: `POST /accesscontrol/createAccessGrant`
+1. Create user: `POST /api/user/createUser` (`email`, `name`)
+2. Create credential: `POST /api/accesscontrol/createStandardCsnCredential` (`credentialValue`, `userUuid`)
+3. Assign credential: `POST /api/accesscontrol/assignAccessControlCredential` (`credentialHexValue`, `userUuid`)
+4. Create access grant: `POST /api/accesscontrol/createAccessGrant` (`accessGrant`)
+5. Unlock a door: `POST /api/accesscontrol/unlockAccessControlledDoor` with `{"accessControlledDoorUuid": "..."}` (list doors with `POST /api/component/findAccessControlledDoors`)
 
 ### Face Recognition Pipeline
 1. Create known person: Use Face Recognition Person endpoints
@@ -324,10 +342,11 @@ The JavaScript examples repo uses Rhombus Codegen for typed stubs — this is an
 4. Use `getExactFrameUri` with crop parameters for vehicle image extraction
 
 ### Webhook Setup
-1. Create webhook: Use Developer Webservice endpoints
-2. Configure event types to listen for
-3. Implement a listener endpoint (see `low-code-no-code` repo for examples)
-4. Webhook payloads include all data needed to fetch associated clips/events
+Rhombus sends two kinds of webhooks:
+1. **Organization webhooks** (Activity or Diagnostic). Add one in the Console under **Settings → Integrations & Developer Resources → Webhooks**, or with the API: call `POST /api/integrations/webhooks/getWebhookIntegration`, then `POST /api/integrations/webhooks/updateWebhookIntegrationV2` with the current settings as `updatedWebhookSettings` plus `webhookUrl` (and `isDiagnostic: true` for a Diagnostic webhook). The response returns that URL's `webhookSecret`. Deliveries carry `x-rhombus-signature-sha1`.
+2. **Rule webhook actions**. Add a webhook action to a rule with `POST /api/rules/createRule` or `POST /api/rules/updateRule`; the response's `webhookSecrets` maps each webhook URL to its secret. Deliveries carry `x-rhombus-signature-sha256` (actions without a secret are sent unsigned).
+3. Implement a listener that verifies the signature over the raw body before parsing. Use the `rhombus-webhook-receiver` skill to scaffold one.
+4. Details: `https://developer.rhombus.com/webhooks`
 
 ### Alarm Monitoring
 1. Configure alarm rules via Alert Monitoring Webservice
@@ -335,9 +354,9 @@ The JavaScript examples repo uses Rhombus Codegen for typed stubs — this is an
 3. Integrate with RapidSOS for emergency dispatch
 
 ### Lockdown Execution
-1. Create lockdown plan: Use Lockdown Plan Webservice
-2. Execute lockdown: triggers door locks, camera presets, notifications
-3. Release lockdown when clear
+1. Create or find a plan: `POST /api/accesscontrol/lockdownPlan/createLocationLockdownPlan`, `POST /api/accesscontrol/lockdownPlan/findLockdownPlansByLocation`
+2. Activate: `POST /api/accesscontrol/lockdownPlan/activateLockdownForLocation` with `locationUuid` and `lockdownPlanUuids`
+3. Release when clear: `POST /api/accesscontrol/lockdownPlan/deactivateLockdownForLocation` with `locationUuid`
 
 ### IoT / Environmental Monitoring
 1. Query sensor data: Use Sensor Webservice or Climate Webservice
@@ -348,11 +367,11 @@ The JavaScript examples repo uses Rhombus Codegen for typed stubs — this is an
 
 **Performance**: Use `getMinimal*` endpoints when full details aren't needed. Cache location and device lists (they change infrequently). Implement pagination for large result sets. Use appropriate time ranges to limit results.
 
-**Rate Limits**: 1,000 requests/hour and 100 requests/minute burst. Implement exponential backoff when hitting limits.
+**Rate Limits**: Limits are enforced per organization: every API key and OAuth token in the org shares one token bucket, so extra keys don't add throughput. The bucket refills at a per-second rate and allows bursts of roughly 10x that rate. A throttled request gets `429` with a `Retry-After` header (seconds); wait that long, then retry with exponential backoff and jitter. See `https://developer.rhombus.com/rate-limits`.
 
-**Security**: Never hardcode API keys — use environment variables or secret managers. For browser apps, use a server-side proxy with federated session tokens. Rotate API keys periodically. Use HTTPS for all requests.
+**Security**: Never hardcode API keys — use environment variables or secret managers. For browser apps, keep the key on a server and hand the browser a short-lived federated token (`x-auth-scheme: federated-token` + `x-auth-ft`). Rotate API keys periodically. Use HTTPS for all requests.
 
-**Error Handling**: 401 = auth failure (check API key + headers), 400 = bad request body, 404 = resource not found, 500 = server error (retry with exponential backoff).
+**Error Handling**: 401 = auth failure (check API key + headers), 400 = bad request body, 404 = resource not found, 429 = rate limited (wait `Retry-After` seconds), 500 = server error (retry with exponential backoff). A `403` with "Invalid api key" often means the key belongs to the other region (US vs EU).
 
 **Architecture**: Rhombus uses POST for all operations, including reads. UUIDs are base64 url-safe encoded strings. Timestamps are Unix epoch milliseconds. The API is the same API that Rhombus's own web console and mobile apps use — if you can do it in the UI, you can do it via API.
 
