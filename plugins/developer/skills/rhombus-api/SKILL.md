@@ -12,7 +12,7 @@ This skill provides comprehensive support for working with the Rhombus API and b
 This plugin auto-attaches two MCP servers. **Always try them before falling back to grep/cURL.**
 
 1. **`mcp__rhombus__*` — Rhombus API MCP (live)**. Call this for anything the user wants to *do*: list cameras, fetch an alert, create a credential, download a clip. It wraps the same API endpoints covered below, with typed arguments and handled auth. Requires `RHOMBUS_API_KEY` in the environment; check `/rhombus-mcp-status` if tools are missing.
-2. **`mcp__rhombus-docs__*` — Rhombus docs MCP (live doc search)**. Call this for "*how do I…*" narrative questions, implementation guides, best practices, and code examples. Tools: `search-documentation`, `get-endpoint-details`, `search-code-examples`.
+2. **`mcp__rhombus-docs__*` — Rhombus docs MCP (live doc search)**. Call this for "*how do I…*" narrative questions, implementation guides, best practices, and code examples. Tools: `search_rhombus_developer` (ranked doc sections, code examples, API operations) and `query_docs_filesystem_rhombus_developer` (read-only `rg`/`cat` over the docs as Markdown; one file per API operation under `/api-reference/`, ending with its OpenAPI excerpt).
 3. **Local OpenAPI grep on `references/rhombus-api.json`** — fallback when (a) the MCP is unreachable, (b) you need exact schema drill-down for an endpoint, or (c) you're enumerating every endpoint in a tag.
 4. **Raw cURL** — only when the user explicitly asks for a shell example, or when integrating with a system that needs cURL syntax. See `references/mcp-tool-reference.md` for a task → MCP-tool map.
 
@@ -20,7 +20,7 @@ Decision tree:
 
 ```
 User asks to DO something on Rhombus   → mcp__rhombus__* tool call
-User asks HOW something works           → mcp__rhombus-docs__search-documentation
+User asks HOW something works           → mcp__rhombus-docs__search_rhombus_developer
 User asks for a schema/field list       → grep references/rhombus-api.json
 User asks for a cURL example            → emit cURL (last resort)
 ```
@@ -33,9 +33,9 @@ Always start by reading `references/quickstart.md` for authentication patterns, 
 
 - **Base URL**: US `https://api2.rhombussystems.com`, EU `https://api2.eu.rhombussystems.com`. An organization lives in one region and its API keys only work against that region's base URL; paths, headers and payloads are identical. See `https://developer.rhombus.com/api-regions`.
 - **OpenAPI Spec (live)**: `https://api2.rhombussystems.com/api/openapi/public.json` (EU: `https://api2.eu.rhombussystems.com/api/openapi/public.json`)
-- **OpenAPI Spec (local)**: `references/rhombus-api.json` (167,856 lines, 986 endpoints)
+- **OpenAPI Spec (local)**: `references/rhombus-api.json` (211,099 lines, 1,041 endpoints; sync date and source in `references/rhombus-api.sync.json`)
 - **Developer Docs**: `https://developer.rhombus.com/`
-- **Documentation MCP**: `https://api-docs.rhombus.community/mcp` (live doc search for AI tools)
+- **Documentation MCP**: `https://developer.rhombus.com/mcp` (live doc search for AI tools)
 - **Docs Index (for AI)**: `https://developer.rhombus.com/llms.txt`
 - **Support**: `support@rhombus.com`
 
@@ -145,7 +145,7 @@ The Rhombus API is organized into **65+ service categories**. When searching the
 
 ## Working with the API Spec
 
-The complete OpenAPI spec is at `references/rhombus-api.json` (167,856 lines). Never try to read it in full. Use targeted grep or `jq` searches. Note that an operationId does not always match the last path segment (for example, `POST /api/camera/getMediaUris` has operationId `getCameraMediaUris`).
+The complete OpenAPI spec is at `references/rhombus-api.json` (211,099 lines). Never try to read it in full. Use targeted grep or `jq` searches. Note that an operationId does not always match the last path segment (for example, `POST /api/camera/getMediaUris` has operationId `getCameraMediaUris`).
 
 ### Search Patterns
 
@@ -254,7 +254,7 @@ This plugin's `.mcp.json` wires two MCP servers automatically — you do not nee
 | Server | Purpose | Key tools |
 |---|---|---|
 | `rhombus` (from `rhombus-node-mcp`) | Live API access — actually performs operations | `mcp__rhombus__*` (see `references/mcp-tool-reference.md` after first connection for the enumerated tool list) |
-| `rhombus-docs` (HTTP MCP at api-docs.rhombus.community) | Live doc search | `mcp__rhombus-docs__search-documentation`, `mcp__rhombus-docs__get-endpoint-details`, `mcp__rhombus-docs__search-code-examples` |
+| `rhombus-docs` (HTTP MCP at developer.rhombus.com/mcp) | Live doc search | `mcp__rhombus-docs__search_rhombus_developer`, `mcp__rhombus-docs__query_docs_filesystem_rhombus_developer` |
 
 Prerequisite for `rhombus`: `RHOMBUS_API_KEY` must be exported in the shell that launched Claude Code. If it isn't, the server fails silently at startup; run `/rhombus-mcp-status` to verify.
 

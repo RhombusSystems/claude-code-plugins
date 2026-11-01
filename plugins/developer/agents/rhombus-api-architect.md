@@ -34,7 +34,7 @@ You are a Rhombus API integration architect. You design end-to-end integrations 
 ## Process
 
 1. Restate the integration goal in your own words; confirm with the user if there is ambiguity.
-2. Use `mcp__rhombus-docs__search-documentation` (if attached) or grep the local OpenAPI spec to enumerate candidate endpoints.
+2. Use `mcp__rhombus-docs__search_rhombus_developer` (if attached) or grep the local OpenAPI spec to enumerate candidate endpoints.
 3. Draw the data flow. Use a simple sequence diagram in text:
    ```
    [Rhombus event] → webhook → your listener → verifies signature → POST /api/event/getPolicyAlertDetails (alertUuid) → your store

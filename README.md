@@ -28,9 +28,16 @@ See [docs/usage.md](docs/usage.md) for full installation details.
 
 | Plugin | For | Key capabilities |
 |---|---|---|
-| [developer](plugins/developer/) | Engineers building on Rhombus | MCP-first: auto-wires `rhombus-node-mcp` + docs MCP. Six `/rhombus-*` commands (endpoint search, schema, curl, SDK codegen, MCP status, new project). API-architect + webhook-debugger agents. Skills for full API reference (892+ endpoints incl. Relay/NVR + third-party RTSP), SDK codegen, webhook receivers, and edge streaming (RTSP/ONVIF). |
+| [developer](plugins/developer/) | Engineers building on Rhombus | MCP-first: auto-wires `rhombus-node-mcp` + docs MCP. Six `/rhombus-*` commands (endpoint search, schema, curl, SDK codegen, MCP status, new project). API-architect + webhook-debugger agents. Skills for full API reference (1,040+ endpoints incl. Robot, Relay/NVR + third-party RTSP), SDK codegen, webhook receivers, and edge streaming (RTSP/ONVIF). |
 | [user](plugins/user/) | Day-to-day Rhombus customers | Rhombus CLI, deployment context (analyze/stitch), Rhombus MIND AI, curated support-article index. Five workflow commands (alerts, status, watch, analyze, context-refresh). CLI, alerts, devices, footage-investigator agents. CLI auto-installer + command validator. |
 | [partner](plugins/partner/) | MSPs and resellers | Active-client session state, fleet-ops audits, cross-client reporting, client onboarding. Six multi-org commands (clients, client-switch, audit-clients, client-alerts, client-devices, fleet-report). Client-selector + fleet-ops + onboarding agents. Partner-aware command validation. |
+
+## What's new in developer 2.0.2
+
+- Local OpenAPI spec re-synced to the live API (1,041 endpoints, up from 986; adds Robot, device labels/health, API-token and webhook-secret rotation, Pane endpoints; drops 7 retired Alert Monitoring/Noonlight endpoints).
+- The `rhombus-docs` MCP now points at `https://developer.rhombus.com/mcp` (the old `api-docs.rhombus.community/mcp` URL redirects to the docs home page, so the server never attached); tool references updated to `search_rhombus_developer` and `query_docs_filesystem_rhombus_developer`.
+- The freshness hook now reads the spec's real sync date from `rhombus-api.sync.json` instead of file mtime (which reset on every install, so it never warned).
+- Maintainers: refresh with `scripts/refresh-openapi-spec.sh`, update the counts in `SKILL.md`/READMEs, and bump the developer plugin version.
 
 ## What's new in 2.0
 

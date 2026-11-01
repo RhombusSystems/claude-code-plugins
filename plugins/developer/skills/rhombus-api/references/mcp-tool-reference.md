@@ -69,7 +69,7 @@ Every fallback endpoint below exists in the bundled spec (`rhombus-api.json`). A
 
 If the task is not in this sheet:
 
-1. `mcp__rhombus-docs__search-documentation "<task keyword>"` — returns doc references with likely endpoints.
+1. `mcp__rhombus-docs__search_rhombus_developer "<task keyword>"` — returns doc references with likely endpoints.
 2. Check the full category list in `../SKILL.md` → "Complete API Category Reference".
 3. If an MCP tool exists for your target endpoint, Claude will offer it in autocomplete as `mcp__rhombus__*`.
 4. If no MCP tool exists, fall back to cURL via `/rhombus-curl <operationId>`.

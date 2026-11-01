@@ -5,7 +5,7 @@ argument-hint: "[operationId]"
 
 Return the request and response schema for the Rhombus API endpoint with operationId `$ARGUMENTS`.
 
-**Preferred path:** If `mcp__rhombus-docs__get-endpoint-details` is attached, call it with `$ARGUMENTS` — it returns full endpoint details including typed schemas.
+**Preferred path:** If `mcp__rhombus-docs__query_docs_filesystem_rhombus_developer` is attached, run `rg -l "$ARGUMENTS" /api-reference` with it, then `cat` the matching file — each operation page ends with that operation's OpenAPI excerpt, including typed schemas.
 
 **Fallback path:** Grep the local OpenAPI spec at `plugins/developer/skills/rhombus-api/references/rhombus-api.json`:
 
