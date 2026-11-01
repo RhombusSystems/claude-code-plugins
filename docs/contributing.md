@@ -151,7 +151,7 @@ Place a `.mcp.json` at the plugin root. Example (from `plugins/developer/.mcp.js
     },
     "rhombus-docs": {
       "type": "http",
-      "url": "https://api-docs.rhombus.community/mcp"
+      "url": "https://developer.rhombus.com/mcp"
     }
   }
 }

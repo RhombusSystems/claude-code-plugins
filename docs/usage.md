@@ -45,7 +45,7 @@ Check each plugin's `README.md` for the complete list of skills, commands, and a
 The `rhombus-developer` plugin auto-wires two MCP servers via its `.mcp.json`:
 
 - **`rhombus`** (official API MCP via `rhombus-node-mcp`) — requires `RHOMBUS_API_KEY` exported in your shell.
-- **`rhombus-docs`** (HTTP MCP at `api-docs.rhombus.community/mcp`) — live doc search.
+- **`rhombus-docs`** (HTTP MCP at `developer.rhombus.com/mcp`) — live doc search.
 
 Verify with `/rhombus-mcp-status`.
 

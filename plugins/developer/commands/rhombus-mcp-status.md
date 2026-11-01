@@ -16,13 +16,13 @@ Report the status of the two MCP servers this plugin wires.
    > - First-run package download still in progress — try again in ~30 seconds.
 
 2. Check whether any `mcp__rhombus-docs__*` tools are attached. If yes:
-   > ✅ **rhombus-docs** — attached. Tools: `search-documentation`, `get-endpoint-details`, `search-code-examples` (as available).
+   > ✅ **rhombus-docs** — attached. Tools: `search_rhombus_developer`, `query_docs_filesystem_rhombus_developer`.
 
    If no:
    > ❌ **rhombus-docs** — not attached.
    >
    > Likely causes:
-   > - Network access to `api-docs.rhombus.community` is blocked.
+   > - Network access to `developer.rhombus.com` is blocked.
    > - The docs MCP endpoint changed — check `plugins/developer/.mcp.json`.
 
 3. If both are attached, summarize: *"Both MCP servers are connected. Claude will prefer MCP tools over raw cURL and local grep. See the `rhombus-api` skill for the decision tree."*

@@ -1,0 +1,9 @@
+{
+  "syncedAt": "2026-11-01T02:28:07Z",
+  "source": "https://api2.rhombussystems.com/api/openapi/public.json",
+  "paths": 1041,
+  "operations": 1041,
+  "schemas": 4324,
+  "lines": 211099,
+  "sha256": "ac4fa4d528ad9df37d54305bb416a4638817b9e10f20dffc04e05219c0d7b747"
+}

@@ -4,7 +4,7 @@ Tools for engineers building on the Rhombus platform. Version **2.0.0**.
 
 ## What's in the box
 
-- **Two MCP servers** auto-attached: `rhombus` (official API MCP via `rhombus-node-mcp`) and `rhombus-docs` (live HTTP MCP at `api-docs.rhombus.community/mcp`).
+- **Two MCP servers** auto-attached: `rhombus` (official API MCP via `rhombus-node-mcp`) and `rhombus-docs` (live HTTP MCP at `developer.rhombus.com/mcp`).
 - **Six slash commands** for common workflows.
 - **Two specialized agents** (API architect, webhook debugger).
 - **Five skills** covering API reference, SDK codegen, webhook scaffolding, edge streaming, and code review.
@@ -40,7 +40,7 @@ Verify with `/rhombus-mcp-status`.
 
 | Skill | Triggers when user asks about |
 |---|---|
-| `rhombus-api` | Rhombus API, endpoints, cURL, any "how do I build X on Rhombus" question (covers 980+ endpoints inc. Relay/NVR + third-party RTSP) |
+| `rhombus-api` | Rhombus API, endpoints, cURL, any "how do I build X on Rhombus" question (covers 1,040+ endpoints inc. Robot, Relay/NVR + third-party RTSP) |
 | `rhombus-sdk-codegen` | Scaffolding typed SDK clients (Python, TS, Java, Go, C#) |
 | `rhombus-webhook-receiver` | Building webhook listeners (Express, FastAPI, Lambda) |
 | `rhombus-edge-streaming` | RTSP, ONVIF, Secure Raw Streams, custom seekpoints, LAN streaming, embedded player |

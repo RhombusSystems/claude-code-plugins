@@ -5,7 +5,7 @@ argument-hint: "[keyword or operationId]"
 
 Search the Rhombus API for endpoints matching `$ARGUMENTS`.
 
-**Preferred path:** If `mcp__rhombus-docs__search-documentation` is attached, call it with the user's query — it returns ranked doc results including endpoint references. If `mcp__rhombus-docs__get-endpoint-details` is attached and `$ARGUMENTS` looks like an operationId, call that instead for structured details.
+**Preferred path:** If `mcp__rhombus-docs__search_rhombus_developer` is attached, call it with the user's query — it returns ranked doc sections including API operations. If `$ARGUMENTS` looks like an operationId and `mcp__rhombus-docs__query_docs_filesystem_rhombus_developer` is attached, run `rg -l "$ARGUMENTS" /api-reference` with it and `cat` the matching file for structured details.
 
 **Fallback path:** Grep the local spec at `plugins/developer/skills/rhombus-api/references/rhombus-api.json`:
 
